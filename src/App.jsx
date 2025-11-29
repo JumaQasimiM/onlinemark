@@ -1,13 +1,16 @@
+import { motion } from "framer-motion";
 function App() {
   return (
-    <div className="flex">
-      <h2>Title</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae
-        repellat quibusdam nesciunt, quaerat odio ea praesentium! Tempore a
-        exercitationem ut dolor delectus atque, modi id quas quis, aut neque
-        animi?
-      </p>
+    <div className="text-center text-3xl ">
+      <motion.h2
+        drag
+        initial={{ opacity: 0, y: -100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="mt-40"
+      >
+        Online Mark Project
+      </motion.h2>
     </div>
   );
 }
