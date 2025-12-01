@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { MdOutlineShoppingCart } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa";
+import { FaBarsStaggered } from "react-icons/fa6";
 
 export const Header = () => {
   const [isScroll, setIsScroll] = useState(false);
@@ -6,9 +9,7 @@ export const Header = () => {
   const navItem = ["Home", "Shop", "About", "Contact"];
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScroll(window.scrollY > 15);
-    };
+    const handleScroll = () => setIsScroll(window.scrollY > 15);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -18,82 +19,65 @@ export const Header = () => {
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300
         ${
           isScroll
-            ? "bg-gradient-to-r from-gray-100 via-gray-50 to-white shadow-md py-4"
-            : "bg-transparent py-6"
+            ? "bg-gradient-to-r from-cyan-500 via-cyan-400 to-cyan-300 shadow-lg py-4"
+            : "bg-gradient-to-r from-cyan-600 via-cyan-500 to-cyan-400 py-6"
         }
       `}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-6">
         {/* Logo */}
-        <div className="text-2xl md:text-3xl font-bold tracking-wide text-blue-700">
-          Logo
+        <div className="text-2xl md:text-3xl font-bold tracking-wide text-yellow-300 hover:text-yellow-400 transition">
+          ShopMate
         </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex">
-          <ul className="flex items-center gap-8 font-medium">
+          <ul className="flex items-center gap-10 font-medium">
             {navItem.map((item, index) => (
               <li
                 key={index}
-                className="relative group cursor-pointer text-gray-800 hover:text-blue-700 transition"
+                className="relative group cursor-pointer text-white hover:text-yellow-300 transition-all duration-300"
               >
-                <span className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-0 group-hover:w-full h-0.5 bg-amber-400 transition-all duration-300"></span>
+                <span className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-0 group-hover:w-full h-0.5 bg-yellow-300 transition-all duration-300"></span>
                 {item}
               </li>
             ))}
           </ul>
         </nav>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center gap-4">
+        {/* Desktop Right Actions */}
+        <div className="flex items-center gap-6 font-medium mx-3">
+          <a className="relative text-white hover:text-yellow-300 transition duration-300 cursor-pointer">
+            <MdOutlineShoppingCart size={28} />
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+              1
+            </span>
+          </a>
+          <a className="text-white hover:text-yellow-300 transition duration-300 cursor-pointer">
+            <FaRegUser size={24} />
+          </a>
           <button
-            className="text-gray-800 focus:outline-none"
+            className="md:hidden text-white focus:outline-none"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            {/* Hamburger icon */}
-            <svg
-              className="w-6 h-6 text-blue-700"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
-            </svg>
+            <FaBarsStaggered size={25} />
           </button>
-        </div>
-
-        {/* Desktop Right Actions */}
-        <div className="hidden md:flex items-center gap-6 font-medium">
-          <a className="hover:text-blue-700 transition cursor-pointer">Cart</a>
-          <a className="hover:text-blue-700 transition cursor-pointer">Login</a>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-gradient-to-r from-gray-100 via-gray-50 to-white shadow-lg w-full absolute top-full left-0 py-4 transition-all duration-300">
-          <ul className="flex flex-col items-center gap-4 text-gray-800 font-medium">
+        <div className="md:hidden bg-gradient-to-b from-cyan-600 via-cyan-500 to-cyan-400 shadow-lg w-full absolute top-full left-0 py-5 transition-all duration-300">
+          <ul className="flex flex-col items-center gap-4 text-white font-medium">
             {navItem.map((item, index) => (
               <li
                 key={index}
-                className="cursor-pointer hover:text-blue-700 transition"
+                className="cursor-pointer hover:text-yellow-300 transition"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item}
               </li>
             ))}
-            <li className="cursor-pointer hover:text-blue-700 transition">
-              Cart
-            </li>
-            <li className="cursor-pointer hover:text-blue-700 transition">
-              Login
-            </li>
           </ul>
         </div>
       )}
