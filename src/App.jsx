@@ -1,15 +1,13 @@
-import { motion } from "framer-motion";
-import { useFetch } from "./hooks/useFetch";
 import { Header } from "./components/Header";
 
 import { Category } from "./components/category";
-import { getProducts, getProductById } from "./apis/ProductsApi";
+import { useProducts, useProductById } from "./apis/ProductsApi";
 import { Home } from "./pages/Home";
 function App() {
   // const { data, error } = useFetch("https://fakestoreapi.com/products");
 
-  const { data, error, loading } = getProducts();
-  const { data: productById } = getProductById(12);
+  const { error } = useProducts();
+  const { data: productById } = useProductById(12);
   if (error) {
     return <div>{error}</div>;
   }

@@ -1,17 +1,22 @@
 import { ImLab } from "react-icons/im";
-import { getProducts } from "../apis/ProductsApi";
+import { useProducts } from "../apis/ProductsApi";
 import { Hero } from "../components/Hero";
+import { ProductCard } from "../components/ProductCard";
 
 export const Home = () => {
-  const { data } = getProducts();
+  const { data } = useProducts();
   return (
     <>
       {/* hero */}
       <Hero />
       {/* new products */}
-      {data?.map((product) => (
-        <li>{product.title}</li>
-      ))}
+      <div className="max-w-7xl mx-auto grid grid-cols-5 gap-2.5 my-5">
+        {data?.map((product) => (
+          <li key={product.id} className="list-none">
+            <ProductCard {...product} />{" "}
+          </li>
+        ))}
+      </div>
       {/* popular products */}
 
       {/* offer */}
