@@ -81,7 +81,7 @@ export const Hero = () => {
               className={`${slide.bgColor} w-full min-h-[90vh] flex justify-center items-center relative`}
             >
               {/* Decorative Shapes */}
-              <div className="absolute -top-20 -left-10 w-72 h-72 bg-cyan-900 rounded-full opacity-10 animate-ping"></div>
+              <div className="absolute -top-20 -left-10 w-92 h-82 bg-cyan-900 rounded-full opacity-10 animate-animateSlow"></div>
               <div className="absolute -bottom-16 -right-20 w-96 h-96 bg-pink-300 rounded-full opacity-15 animate-pulse"></div>
 
               {/* Unified Card Container */}
