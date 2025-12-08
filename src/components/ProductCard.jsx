@@ -1,39 +1,74 @@
 import { motion } from "framer-motion";
 import { FaShoppingCart, FaCreditCard } from "react-icons/fa";
 
-export const ProductCard = ({ image, title, price }) => {
+export const ProductCard = ({ image, title, price, rating }) => {
   return (
     <motion.div
-      className="bg-sky-100 p-4 rounded-xl shadow-lg cursor-pointer flex flex-col items-center hover:bg-sky-200 transition-colors duration-300"
-      whileHover={{ scale: 1.05, boxShadow: "0px 15px 25px rgba(0,0,0,0.2)" }}
-      initial={{ opacity: 0, y: 20 }}
+      className="bg-white/90 backdrop-blur-lg p-5 rounded-xl shadow-sm 
+                 border border-gray-200 cursor-pointer flex flex-col 
+                 hover:shadow-lg transition-all duration-300"
+      whileHover={{ scale: 1.03 }}
+      initial={{ opacity: 0, y: 25 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.45 }}
     >
-      <img
-        src={image}
-        alt={title}
-        className="w-full aspect-[4/3] object-cover rounded-lg mb-4"
-      />
-      <div className="text-center">
-        <h2 className="text-lg font-bold text-gray-800 mb-2">
-          {title.length > 25 ? title.slice(0, 25) + "..." : title}
-        </h2>
-        <p className="text-gray-700 mb-4">
-          {new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-          }).format(price)}
-        </p>
-        <div className="flex gap-3 justify-center">
-          <button className="flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors">
-            <FaShoppingCart /> Add to Cart
-          </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors">
-            <FaCreditCard /> Checkout
-          </button>
-        </div>
+      {/* Image */}
+      <div className="w-full rounded-lg overflow-hidden mb-4 bg-white">
+        <motion.img
+          src={image}
+          alt={title}
+          className="w-full aspect-[4/3] object-contain p-2"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
+        />
+      </div>
+
+      {/* Title */}
+      <p className="text-lg font-semibold text-gray-900 mb-1 text-center px-2">
+        {title.slice(0, 15)}
+      </p>
+
+      {/* Rating */}
+      <div className="flex justify-center items-center gap-1 text-yellow-500 mb-2">
+        {Array.from({ length: 5 }, (_, i) => (
+          <span
+            key={i}
+            className={
+              i < Math.round(rating?.rate || 0) ? "opacity-100" : "opacity-30"
+            }
+          >
+            ★
+          </span>
+        ))}
+        <span className="text-gray-600 text-sm ml-1">
+          ({rating?.rate || 0})
+        </span>
+      </div>
+
+      {/* Price */}
+      <p className="text-xl font-bold text-sky-700 mb-4 text-center">
+        ${price}
+      </p>
+
+      {/* Buttons */}
+      <div className="flex items-center gap-3 w-full mt-auto">
+        <button
+          className="text-sm flex-1 flex items-center justify-center gap-2 py-2 
+                     bg-sky-500 text-white rounded-lg font-medium
+                     hover:bg-sky-600 active:scale-95 transition"
+        >
+          <FaShoppingCart /> Add to Cart
+        </button>
+
+        <button
+          className="text-sm flex-1 flex items-center justify-center gap-2 py-2
+                     bg-blue-700 text-white rounded-lg font-medium
+                     hover:bg-blue-800 active:scale-95 transition"
+        >
+          <FaCreditCard /> Buy
+        </button>
       </div>
     </motion.div>
   );
 };
+//
