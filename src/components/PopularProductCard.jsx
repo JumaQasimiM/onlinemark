@@ -7,9 +7,8 @@ export const PopularProductCard = ({ image, title, price, rating }) => {
   return (
     <motion.div
       className="relative bg-white/90 backdrop-blur-xl rounded-xl border border-gray-100
-                 cursor-pointer flex flex-col hover:shadow-xl hover:-translate-y-1
+                 cursor-pointer flex flex-col hover:shadow-lg hover:-translate-y-1
                  transition-all duration-300 group"
-      whileHover={{ scale: 1.02 }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
@@ -21,18 +20,18 @@ export const PopularProductCard = ({ image, title, price, rating }) => {
       </p>
 
       {/* Image */}
-      <div className="bg-gray-100 w-full p-4 rounded-t-xl overflow-hidden">
+      <div className="bg-gray-200 w-[90%] h-50 mx-auto m-2 p-3 rounded-md overflow-hidden rounded-tl-xs">
         <motion.img
           src={image}
           alt={title}
-          className="w-full aspect-[4/3] object-contain p-2"
+          className="w-full h-full aspect-[4/3] object-contain p-3 "
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.35 }}
         />
       </div>
 
       {/* Favorite & Extra Icons (on hover) */}
-      <div className="absolute top-3 right-3 opacity-0 flex flex-col gap-2  group-hover:opacity-100 transition-all duration-700 z-20">
+      <div className="absolute top-3 right-3 opacity-0 flex flex-col gap-2  group-hover:opacity-100 transition-all duration-300 z-20">
         <div className="bg-white/70 backdrop-blur-md p-2 rounded-full shadow-md cursor-pointer hover:bg-white">
           <FaHeart className="w-4 h-4 text-black/70" />
         </div>
@@ -42,9 +41,9 @@ export const PopularProductCard = ({ image, title, price, rating }) => {
       </div>
 
       {/* Content */}
-      <div className="flex flex-col justify-start py-3 px-4">
+      <div className="flex flex-col justify-start mb-3 -mt-2 px-4">
         {/* Title */}
-        <h3 className="text-md font-bold text-gray-900 mb-2 leading-snug">
+        <h3 className="text-md font-bold text-gray-900 mb-2 leading-snug uppercase">
           {title.slice(0, 15)}
         </h3>
 
@@ -72,11 +71,11 @@ export const PopularProductCard = ({ image, title, price, rating }) => {
 
         {/* Buttons */}
         <div className="flex items-center gap-3 w-full mt-auto">
-          <button className="flex-1 flex items-center justify-center gap-2 py-1 text-sm bg-sky-500 text-white rounded-lg font-medium hover:bg-sky-600 hover:shadow-md active:scale-95 transition">
-            <FaShoppingCart /> Add to Cart
+          <button className="flex-1 flex items-center justify-center gap-2 py-1 text-sm bg-sky-700 text-white rounded font-medium hover:bg-sky-600 hover:shadow-md active:scale-95 transition">
+            <FaShoppingCart className="text-white/90" size={20} />
           </button>
 
-          <button className="flex-1 flex items-center justify-center gap-2 py-1 text-sm border border-sky-500 text-gray-900 rounded-lg font-medium hover:bg-sky-100 hover:shadow-md active:scale-95 transition">
+          <button className="flex-2 flex items-center justify-center gap-2 py-1 text-sm border border-sky-500 text-gray-900 rounded font-medium hover:bg-sky-100 hover:shadow-md active:scale-95 transition">
             <FaCreditCard /> Buy
           </button>
         </div>
