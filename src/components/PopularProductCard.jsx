@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
 import { FaShoppingCart, FaCreditCard, FaStar, FaHeart } from "react-icons/fa";
 
-export const PopularProductCard = ({ image, title, price, rating }) => {
+export const PopularProductCard = ({
+  image,
+  title,
+  price,
+  rating,
+  type = "popular",
+}) => {
   //   const displayedTitle = title.length > 30 ? title.slice(0, 27) + "..." : title;
 
   return (
@@ -14,10 +20,12 @@ export const PopularProductCard = ({ image, title, price, rating }) => {
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       {/* Popular Badge */}
-      <p className="absolute top-3 left-3 flex items-center gap-1 bg-sky-600 text-white text-sm font-semibold px-3 py-1 rounded shadow-md z-10">
-        <FaStar className="w-3 h-3" />
-        Popular
-      </p>
+      {type === "popular" && (
+        <p className="absolute top-3 left-3 flex items-center gap-1 bg-sky-600 text-white text-sm font-semibold px-3 py-1 rounded shadow-md z-10">
+          <FaStar className="w-3 h-3" />
+          Popular
+        </p>
+      )}
 
       {/* Image */}
       <div className="bg-gray-200 w-[90%] h-50 mx-auto m-2 p-3 rounded-md overflow-hidden rounded-tl-xs">

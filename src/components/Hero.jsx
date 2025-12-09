@@ -1,121 +1,50 @@
-import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-
-import graTshirt from "../assets/grayTshirt.jpg";
-import blueTshirt from "../assets/blueShirt.jpg";
-import whiteTshirt from "../assets/tshirtWhite.jpg";
+import T3 from "../assets/t3.png";
+import { FaShoppingBag } from "react-icons/fa";
 
 export const Hero = () => {
-  const slides = [
-    {
-      id: 1,
-      title: "Winter Sale is Here!",
-      subtitle:
-        "Up to 50% off on selected tees. Stay cozy and stylish this season.",
-      image: graTshirt,
-      bgColor: "bg-gradient-to-r from-cyan-700 via-cyan-500 to-cyan-400",
-      textColor: "text-white",
-      tag: "50% OFF",
-    },
-    {
-      id: 2,
-      title: "New Arrivals Just Dropped",
-      subtitle:
-        "Fresh designs and colors for your everyday style. Check them out now!",
-      image: whiteTshirt,
-      bgColor: "bg-gradient-to-r from-cyan-700 via-cyan-500 to-cyan-400",
-      textColor: "text-gray-800",
-      tag: "NEW",
-    },
-    {
-      id: 3,
-      title: "Limited Time Offer!",
-      subtitle: "Buy 2 tees, get 1 free. Upgrade your wardrobe today!",
-      image: blueTshirt,
-      bgColor: "bg-gradient-to-r from-cyan-700 via-cyan-500 to-cyan-400",
-      textColor: "text-gray-800",
-      tag: "HOT",
-    },
-  ];
-
   return (
-    <section className="w-full h-auto mt-20 relative overflow-hidden">
-      <Swiper
-        modules={[Navigation, Pagination, A11y, Autoplay]}
-        slidesPerView={1}
-        loop
-        autoplay={{
-          delay: 3500,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        }}
-        pagination={{ clickable: true }}
-        speed={1000}
-        navigation={{ enabled: true }}
-        className="relative"
-      >
-        <style>
-          {`
-            .swiper-button-prev,
-            .swiper-button-next {
-              display: none;
-            }
-            @media (min-width: 768px) {
-              .swiper-button-prev,
-              .swiper-button-next {
-                display: flex;
-                width: 35px;
-                height: 35px;
-                color: white;
-              }
-            }
-          `}
-        </style>
+    <section className="relative w-full h-[90vh] mt-20 bg-gradient-to-r from-cyan-700 via-cyan-500 to-cyan-400 overflow-hidden flex flex-col md:flex-row items-center justify-between px-6 md:px-16">
+      {/* TEXT SECTION */}
+      <div className="w-full md:w-2/3 space-y-6 text-white relative z-20 text-center md:text-left">
+        <span className="inline-block bg-white/30 text-white font-bold px-4 py-1 rounded-xl shadow-lg text-sm uppercase">
+          NEW
+        </span>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight drop-shadow-lg">
+          Premium Sky Collection
+        </h1>
+        <p className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-md text-white/90 mx-auto md:mx-0 drop-shadow-sm">
+          Discover vibrant sky-inspired styles crafted with modern design,
+          premium comfort, and exceptional detail. Upgrade your wardrobe today!
+        </p>
+        <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 mt-4 text-base">
+          <button className="flex items-center justify-center gap-2 bg-white text-cyan-600 font-bold px-6 py-3 rounded-xl shadow-2xl hover:shadow-3xl transition transform hover:-translate-y-1">
+            <FaShoppingBag />
+            Shop Now
+          </button>
+          <button className="border border-white text-white px-6 py-3 rounded-xl hover:bg-white/20 transition">
+            Explore
+          </button>
+        </div>
+      </div>
 
-        {slides.map((slide) => (
-          <SwiperSlide key={slide.id}>
-            <div
-              className={`${slide.bgColor} w-full min-h-[90vh] flex justify-center items-center relative`}
-            >
-              {/* Decorative Shapes */}
-              <div className="absolute -top-20 -left-10 w-92 h-82 bg-cyan-900 rounded-full opacity-10 animate-animateSlow"></div>
-              <div className="absolute -bottom-16 -right-20 w-96 h-96 bg-pink-300 rounded-full opacity-15 animate-pulse"></div>
+      {/* IMAGE SECTION */}
+      <div className="w-full md:w-1/3 flex justify-center items-center relative mt-10 md:mt-0">
+        {/* Main Shirt */}
+        <img
+          src={T3}
+          alt="Main T-Shirt"
+          className="w-64 sm:w-80 md:w-[400px] lg:w-[500px] object-contain drop-shadow-2xl"
+        />
 
-              {/* Unified Card Container */}
-              <div className="relative z-10 max-w-6xl w-full mx-auto flex flex-col md:flex-row items-center justify-between gap-8 p-6 md:p-10 transition-all hover:scale-[1.01]">
-                {/* Text Section */}
-                <div className={`flex-1 space-y-4 ${slide.textColor}`}>
-                  <div className="inline-block bg-yellow-400 text-gray-900 px-4 py-1 rounded-full font-bold text-sm mb-2 animate-bounce">
-                    {slide.tag}
-                  </div>
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-lg">
-                    {slide.title}
-                  </h1>
-                  <p className="text-base sm:text-lg md:text-xl drop-shadow-sm">
-                    {slide.subtitle}
-                  </p>
-                  <button className="mt-4 bg-yellow-400 hover:bg-yellow-500 px-6 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 text-gray-900 font-semibold rounded-full shadow-lg transition-all hover:scale-105">
-                    Shop Now
-                  </button>
-                </div>
+        {/* Floating Badge */}
+        <div className="absolute top-5 right-5 bg-green-500 text-white py-1 px-3 rounded-lg shadow-2xl text-sm font-semibold animate-bounce">
+          ⭐ Special just for you
+        </div>
+      </div>
 
-                {/* Image Section */}
-                <div className="flex-1 flex justify-center md:justify-end relative">
-                  <img
-                    src={slide.image}
-                    className="w-[280px] sm:w-[320px] md:w-[400px] lg:w-[450px] object-contain"
-                  />
-                  {/* Floating gradient overlay */}
-                  <div className="absolute -top-10 -left-10 w-40 h-40 bg-gradient-to-tr from-yellow-400 via-pink-400 to-purple-500 opacity-30 rounded-full blur-3xl animate-animateSlow"></div>
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {/* Decorative Glow Circles */}
+      <div className="absolute -top-32 -left-32 w-72 sm:w-96 h-72 sm:h-96 bg-white/20 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute -bottom-32 -right-32 w-72 sm:w-96 h-72 sm:h-96 bg-white/20 rounded-full blur-3xl animate-spin"></div>
     </section>
   );
 };
