@@ -7,7 +7,7 @@ export const Gallery = () => {
   const images = [img1, img2, img1, img2, img1];
 
   return (
-    <div className="w-full bg-slate-100">
+    <div className="w-full bg-slate-100 p-1">
       <section className="max-w-7xl mx-auto my-16 px-4 md:px-8 overflow-hidden">
         {/* Title */}
         <div className="mb-8">

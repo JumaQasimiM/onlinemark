@@ -26,8 +26,8 @@ export const Header = () => {
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-6">
         {/* Logo */}
-        <div className="text-2xl md:text-3xl font-bold tracking-wide text-yellow-300 hover:text-yellow-400 transition">
-          ShopMate
+        <div className="text-2xl md:text-3xl font-bold tracking-wide text-sky-900 hover:text-sky-700 transition duration-300">
+          Premium Sky
         </div>
 
         {/* Desktop Navigation */}

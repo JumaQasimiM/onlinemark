@@ -7,6 +7,8 @@ import { ProductCard } from "../components/ProductCard";
 import { PopularProductCard } from "../components/PopularProductCard";
 import T3 from "../assets/t3.png";
 import { Gallery } from "../components/Gallary";
+import { Newsletter } from "../components/Newslatter";
+import { Category } from "../components/category";
 
 export const Home = () => {
   const { data: newProducts = [] } = useNewProducts();
@@ -22,7 +24,8 @@ export const Home = () => {
     <>
       {/* Hero Section */}
       <Hero />
-
+      {/* category */}
+      <Category />
       {/* New Arrival Products */}
       <section className="max-w-7xl mx-auto my-16 px-4 md:px-8">
         <motion.h2
@@ -82,6 +85,7 @@ export const Home = () => {
       </section>
 
       {/* Newsletter Section */}
+      <Newsletter />
     </>
   );
 };
