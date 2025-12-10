@@ -1,4 +1,5 @@
 import { Header } from "./components/Header";
+import { ToastContainer, Bounce } from "react-toastify";
 
 import { useProducts, useProductById } from "./apis/ProductsApi";
 import { Home } from "./pages/Home";
@@ -13,6 +14,20 @@ function App() {
   }
   return (
     <>
+      {/* Notifcation using react tostify  */}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Bounce}
+      />
       <Header />
       <Home />
 

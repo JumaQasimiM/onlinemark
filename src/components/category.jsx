@@ -27,15 +27,15 @@ export const Category = () => {
           {categories.map((cat, idx) => (
             <motion.div
               key={idx}
-              className="relative flex flex-col items-center justify-center p-6 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-transform transform cursor-pointer"
-              whileHover={{ scale: 1.06 }}
+              className="relative flex flex-col items-center justify-center p-6 bg-white rounded shadow-lg hover:shadow-2xl transition-transform transform cursor-pointer"
+              whileHover={{ scale: 1.03 }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: idx * 0.1 }}
             >
               {/* Gradient Icon */}
-              <div className="w-20 h-20 flex items-center justify-center rounded-full bg-gradient-to-tr from-pink-500 via-pink-400 to-pink-300 text-white text-4xl shadow-md mb-4">
+              <div className="w-20 h-20 flex items-center justify-center rounded-full bg-gradient-to-tr from-sky-500 via-cyan-300 to-sky-300 text-white text-4xl shadow-md mb-4">
                 {cat.icon}
               </div>
 
