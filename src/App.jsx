@@ -1,37 +1,47 @@
-import { Header } from "./components/Header";
 import { ToastContainer, Bounce } from "react-toastify";
 
-import { useProducts, useProductById } from "./apis/ProductsApi";
-import { Home } from "./pages/Home";
+// components
+import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
-function App() {
-  // const { data, error } = useFetch("https://fakestoreapi.com/products");
 
-  const { error } = useProducts();
-  const { data: productById } = useProductById(12);
-  if (error) {
-    return <div>{error}</div>;
-  }
+// pages
+import { Home } from "./pages/Home";
+import { Products } from "./pages/Products";
+import { ProductDetail } from "./pages/productsDetails";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+function App() {
   return (
     <>
-      {/* Notifcation using react tostify  */}
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-        transition={Bounce}
-      />
-      <Header />
-      <Home />
+      <BrowserRouter>
+        {/* Notification */}
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          transition={Bounce}
+        />
 
-      <Footer />
+        {/* Layout */}
+        <Header />
+
+        {/* Pages */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
+        </Routes>
+
+        <Footer />
+      </BrowserRouter>
     </>
   );
 }

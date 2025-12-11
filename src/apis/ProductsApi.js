@@ -3,6 +3,9 @@ import { useFetch } from "../hooks/useFetch";
 
 export const useProducts = () => useFetch(`${Api_Url}/products`);
 export const useProductById = (id) => useFetch(`${Api_Url}/products/${id}`);
+// relatit products
+export const useRelatetProducts = (category) =>
+  useFetch(`${Api_Url}/products/category/${category}`);
 
 // Custom Hook für die neuesten Produkte
 export const useNewProducts = () => {

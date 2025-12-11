@@ -2,11 +2,16 @@ import { useEffect, useState } from "react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
 import { FaBarsStaggered } from "react-icons/fa6";
+import { NavLink } from "react-router-dom";
 
 export const Header = () => {
   const [isScroll, setIsScroll] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navItem = ["Home", "Shop", "About", "Contact"];
+
+  const navItem = [
+    { name: "Home", path: "/" },
+    { name: "Shop", path: "/products" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => setIsScroll(window.scrollY > 15);
@@ -34,18 +39,19 @@ export const Header = () => {
         <nav className="hidden md:flex">
           <ul className="flex items-center gap-10 font-medium">
             {navItem.map((item, index) => (
-              <li
+              <NavLink
                 key={index}
+                to={item.path}
                 className="relative group cursor-pointer text-white hover:text-yellow-300 transition-all duration-300"
               >
                 <span className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-0 group-hover:w-full h-0.5 bg-yellow-300 transition-all duration-300"></span>
-                {item}
-              </li>
+                {item.name}
+              </NavLink>
             ))}
           </ul>
         </nav>
 
-        {/* Desktop Right Actions */}
+        {/* Right Actions */}
         <div className="flex items-center gap-6 font-medium mx-3">
           <a className="relative text-white hover:text-yellow-300 transition duration-300 cursor-pointer">
             <MdOutlineShoppingCart size={28} />
@@ -53,9 +59,12 @@ export const Header = () => {
               1
             </span>
           </a>
+
           <a className="text-white hover:text-yellow-300 transition duration-300 cursor-pointer">
             <FaRegUser size={24} />
           </a>
+
+          {/* Mobile Menu Toggle */}
           <button
             className="md:hidden text-white focus:outline-none"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -70,13 +79,14 @@ export const Header = () => {
         <div className="md:hidden bg-gradient-to-b from-cyan-600 via-cyan-500 to-cyan-400 shadow-lg w-full absolute top-full left-0 py-5 transition-all duration-300">
           <ul className="flex flex-col items-center gap-4 text-white font-medium">
             {navItem.map((item, index) => (
-              <li
+              <NavLink
                 key={index}
+                to={item.path}
                 className="cursor-pointer hover:text-yellow-300 transition"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => setIsMobileMenuOpen(false)} // close menu
               >
-                {item}
-              </li>
+                {item.name}
+              </NavLink>
             ))}
           </ul>
         </div>

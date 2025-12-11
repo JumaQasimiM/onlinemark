@@ -1,14 +1,17 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaShoppingCart, FaCreditCard, FaStar, FaHeart } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export const PopularProductCard = ({
+  id,
   image,
   title,
   price,
   rating,
   type = "popular",
 }) => {
-  //   const displayedTitle = title.length > 30 ? title.slice(0, 27) + "..." : title;
+  const [showActions, setShowActions] = useState(false);
 
   return (
     <motion.div
@@ -18,6 +21,7 @@ export const PopularProductCard = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
+      onClick={() => setShowActions(!showActions)} // 👉 mobile tap toggle
     >
       {/* Popular Badge */}
       {type === "popular" && (
@@ -28,18 +32,30 @@ export const PopularProductCard = ({
       )}
 
       {/* Image */}
-      <div className="bg-gray-200 w-[90%] h-50 mx-auto m-2 p-3 rounded-md overflow-hidden rounded-tl-xs">
-        <motion.img
-          src={image}
-          alt={title}
-          className="w-full h-full aspect-[4/3] object-contain p-3 "
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.35 }}
-        />
+      <div className="bg-gray-200 w-[90%] h-50 mx-auto m-2 p-3 rounded-md overflow-hidden">
+        <Link to={"/products/" + id}>
+          <motion.img
+            src={image}
+            alt={title}
+            className="w-full h-full aspect-[4/3] object-contain p-3"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.35 }}
+          />
+        </Link>
       </div>
 
-      {/* Favorite & Extra Icons (on hover) */}
-      <div className="absolute top-3 right-3 opacity-0 flex flex-col gap-2  group-hover:opacity-100 transition-all duration-300 z-20">
+      {/* ❤️ Favorite + 🛒 Cart (Hover + Tap Support) */}
+      <div
+        className={`
+          absolute top-3 right-6 flex flex-col gap-2 z-20 transition-all duration-300
+          
+          /* Desktop hover */
+          group-hover:opacity-100
+
+          /* Mobile tap */
+          ${showActions ? "opacity-100" : "opacity-0 pointer-events-none"}
+        `}
+      >
         <div className="bg-white/70 backdrop-blur-md p-2 rounded-full shadow-md cursor-pointer hover:bg-white">
           <FaHeart className="w-4 h-4 text-black/70" />
         </div>
@@ -49,12 +65,12 @@ export const PopularProductCard = ({
       </div>
 
       {/* Content */}
-      <div className="flex flex-col justify-start mb-3 -mt-2 px-4">
-        {/* Title */}
-        <h3 className="text-md font-bold text-gray-900 mb-2 leading-snug uppercase">
-          {title.slice(0, 15)}
-        </h3>
-
+      <div className="flex flex-col justify-start mb-3 -mt-1 px-4">
+        <Link to={"/products/" + id}>
+          <h3 className="text-md font-bold text-gray-900 mb-2 leading-snug uppercase hover:underline">
+            {title.slice(0, 15)}
+          </h3>
+        </Link>
         {/* Rating */}
         <div className="flex items-center gap-1 mb-2">
           {Array.from({ length: 5 }, (_, i) => (

@@ -1,3 +1,15 @@
+10.12
+
+1. create rounts
+2. search and filter in products pages
+3. filter by category
+4. filter bei price
+5. products detail
+6. add to card
+7. login page
+8. register page
+9.
+
 ## Online Markt
 
 ## src/components
