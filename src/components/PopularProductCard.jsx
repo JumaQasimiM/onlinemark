@@ -30,6 +30,12 @@ export const PopularProductCard = ({
           Popular
         </p>
       )}
+      {type === "discount" && (
+        <p className="absolute top-3 left-3 flex items-center gap-1 bg-sky-600 text-white text-sm font-semibold px-3 py-1 rounded shadow-md z-10">
+          <FaStar className="w-3 h-3" />
+          Special offer for you
+        </p>
+      )}
 
       {/* Image */}
       <div className="bg-gray-200 w-[90%] h-50 mx-auto m-2 p-3 rounded-md overflow-hidden">
