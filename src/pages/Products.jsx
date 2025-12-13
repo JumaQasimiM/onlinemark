@@ -33,12 +33,6 @@ export const Products = () => {
     return matchCategory && matchSearch;
   });
 
-  // Debug errors
-  // useEffect(() => {
-  //   if (catError) console.error(catError);
-  //   if (prodError) console.error(prodError);
-  // }, [catError, prodError]);
-
   // Loading state
   if (catLoading || prodLoading) {
     return (
@@ -65,27 +59,30 @@ export const Products = () => {
       <div className="max-w-7xl mx-auto px-4 mb-12">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 p-4">
           {/* Categories */}
-          <ul className="flex gap-6 text-sm font-medium text-gray-600">
-            {categories.map((cate, idx) => (
-              <motion.li
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3, delay: idx * 0.1 }}
-                whileHover={{ scale: 1.03 }}
-                key={cate}
-                onClick={() => setActiveCategory(cate)}
-                className={`px-4 py-2 rounded cursor-pointer transition
-                  ${
-                    activeCategory === cate
-                      ? "border-b-2 text-sky-950 rounded-none hover:bg-gray-200"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  }`}
-              >
-                {cate}
-              </motion.li>
-            ))}
-          </ul>
+
+          <div className="overflow-x-auto w-full">
+            <ul className="flex gap-4 text-sm font-medium text-gray-600 px-2 sm:px-0">
+              {categories.map((cate, idx) => (
+                <motion.li
+                  key={cate}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3, delay: idx * 0.1 }}
+                  whileHover={{ scale: 1.03 }}
+                  onClick={() => setActiveCategory(cate)}
+                  className={`flex-shrink-0 px-4 py-2 rounded cursor-pointer transition text-center
+                   ${
+                     activeCategory === cate
+                       ? "border-b-2 border-sky-600 text-sky-950 rounded-none hover:bg-gray-200"
+                       : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                   }`}
+                >
+                  {cate}
+                </motion.li>
+              ))}
+            </ul>
+          </div>
 
           {/* Search */}
           <motion.div

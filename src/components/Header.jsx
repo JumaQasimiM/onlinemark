@@ -3,7 +3,7 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { Link, NavLink } from "react-router-dom";
-
+import { motion } from "framer-motion";
 export const Header = () => {
   const [isScroll, setIsScroll] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -65,7 +65,7 @@ export const Header = () => {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden text-white focus:outline-none"
+            className="md:hidden text-black focus:outline-none"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             <FaBarsStaggered size={25} />
@@ -75,8 +75,13 @@ export const Header = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-gradient-to-b from-cyan-600 via-cyan-500 to-cyan-400 shadow-lg w-full absolute top-full left-0 py-5 transition-all duration-300">
-          <ul className="flex flex-col items-center gap-4 text-white font-medium">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          whileHover={{ scale: 1.1 }}
+          className="md:hidden bg-slate-300 shadow-lg w-full absolute top-full left-0 py-5 transition-all duration-300"
+        >
+          <ul className="flex flex-col items-center gap-4 text-black font-medium">
             {navItem.map((item, index) => (
               <NavLink
                 key={index}
@@ -88,7 +93,7 @@ export const Header = () => {
               </NavLink>
             ))}
           </ul>
-        </div>
+        </motion.div>
       )}
     </header>
   );
