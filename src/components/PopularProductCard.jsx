@@ -6,10 +6,10 @@ import { toast } from "react-toastify";
 
 export const PopularProductCard = ({
   id,
-  image,
   title,
   price,
-  rating,
+  rating = 0,
+  thumbnail,
   type = "popular",
 }) => {
   const [showActions, setShowActions] = useState(false);
@@ -47,7 +47,7 @@ export const PopularProductCard = ({
       <div className="bg-gray-200 w-[90%] h-50 mx-auto m-2 p-3 rounded-md overflow-hidden">
         <Link to={"/products/" + id}>
           <motion.img
-            src={image}
+            src={thumbnail}
             alt={title}
             className="w-full h-full aspect-[4/3] object-contain p-3"
             whileHover={{ scale: 1.05 }}
@@ -89,7 +89,7 @@ export const PopularProductCard = ({
             <span
               key={i}
               className={
-                i < Math.round(rating?.rate || 0)
+                i < Math.round(rating)
                   ? "text-yellow-400"
                   : "text-yellow-300/40"
               }
@@ -97,8 +97,9 @@ export const PopularProductCard = ({
               ★
             </span>
           ))}
+
           <span className="text-gray-600 text-sm ml-1">
-            {rating?.rate?.toFixed(1) || "0.0"}
+            {rating.toFixed(1)}
           </span>
         </div>
 

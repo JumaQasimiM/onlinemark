@@ -9,7 +9,10 @@ import { toast } from "react-toastify";
 export const ProductDetail = () => {
   const { id } = useParams();
   const { data: productDetail } = useProductById(id);
-  const { data: relatetProducts } = useRelatetProducts(productDetail?.category);
+
+  const { data: relatetProducts = [] } = useRelatetProducts(
+    productDetail?.category
+  );
 
   const AddToCart = (id) => {
     toast.success(`Product ${id} added to cart!`);
@@ -32,7 +35,7 @@ export const ProductDetail = () => {
               className="bg-gray-100 rounded-xl p-4 md:p-5 shadow-md hover:shadow-lg transition w-full"
             >
               <motion.img
-                src={productDetail.image}
+                src={productDetail.thumbnail}
                 alt={productDetail.title}
                 className="w-full max-w-[350px] md:max-w-[450px] mx-auto h-100 drop-shadow-sky-200 drop-shadow-xl object-contain"
                 whileHover={{ scale: 1.05 }}
@@ -63,7 +66,7 @@ export const ProductDetail = () => {
                     border border-gray-300 shadow-sm hover:shadow-md hover:border-sky-500 transition"
                 >
                   <img
-                    src={productDetail.image}
+                    src={productDetail.thumbnail}
                     alt="thumb"
                     className="object-contain w-full h-full"
                   />
@@ -97,7 +100,7 @@ export const ProductDetail = () => {
               </h2>
 
               <span className="flex items-center text-yellow-500 text-xl font-semibold gap-1">
-                <FaStar /> {productDetail.rating?.rate}
+                <FaStar /> {productDetail.rating}
               </span>
             </div>
 
@@ -190,7 +193,7 @@ export const ProductDetail = () => {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {relatetProducts?.slice(0, 4).map((r) => (
+            {relatetProducts?.slice(0, 7).map((r) => (
               <PopularProductCard key={r.id} type="new" {...r} />
             ))}
           </div>

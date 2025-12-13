@@ -11,20 +11,21 @@ export const Products = () => {
     loading: catLoading,
     error: catError,
   } = useProductCategories();
-  const categories = ["All", ...category];
+  // Normalize categories first
+  const categories = [{ slug: "All", name: "All" }, ...category];
 
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
 
   // Products
   const {
-    data: products = [],
+    data: productes = [],
     loading: prodLoading,
     error: prodError,
   } = useProducts();
 
   // Filter by category and search
-  const filteredData = products.filter((product) => {
+  const filteredData = productes.filter((product) => {
     const matchCategory =
       activeCategory === "All" || product.category === activeCategory;
     const matchSearch = product.title
@@ -62,23 +63,23 @@ export const Products = () => {
 
           <div className="overflow-x-auto w-full">
             <ul className="flex gap-4 text-sm font-medium text-gray-600 px-2 sm:px-0">
-              {categories.map((cate, idx) => (
+              {categories.slice(0, 7).map((cate, idx) => (
                 <motion.li
-                  key={cate}
+                  key={cate.slug}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3, delay: idx * 0.1 }}
                   whileHover={{ scale: 1.03 }}
-                  onClick={() => setActiveCategory(cate)}
+                  onClick={() => setActiveCategory(cate.slug)}
                   className={`flex-shrink-0 px-4 py-2 rounded cursor-pointer transition text-center
-                   ${
-                     activeCategory === cate
-                       ? "border-b-2 border-sky-600 text-sky-950 rounded-none hover:bg-gray-200"
-                       : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                   }`}
+                            ${
+                              activeCategory === cate.slug
+                                ? "border-b-2 border-sky-600 text-sky-950 rounded-none hover:bg-gray-200"
+                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                            }`}
                 >
-                  {cate}
+                  {cate.name}
                 </motion.li>
               ))}
             </ul>
@@ -107,7 +108,7 @@ export const Products = () => {
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <AnimatePresence>
           {filteredData.length > 0 ? (
-            filteredData.map((product, idx) => (
+            filteredData.slice(0, 20).map((product, idx) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 20 }}

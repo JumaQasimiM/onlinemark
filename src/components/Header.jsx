@@ -11,6 +11,8 @@ export const Header = () => {
   const navItem = [
     { name: "Home", path: "/" },
     { name: "Shop", path: "/products" },
+    { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact" },
   ];
 
   useEffect(() => {
