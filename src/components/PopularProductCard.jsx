@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaShoppingCart, FaCreditCard, FaStar, FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const PopularProductCard = ({
   id,
@@ -12,6 +13,11 @@ export const PopularProductCard = ({
   type = "popular",
 }) => {
   const [showActions, setShowActions] = useState(false);
+
+  // add to cart
+  const AddToCart = (id) => {
+    toast.success(`Product ${id} added to cart!`);
+  };
 
   return (
     <motion.div
@@ -33,7 +39,7 @@ export const PopularProductCard = ({
       {type === "discount" && (
         <p className="absolute top-3 left-3 flex items-center gap-1 bg-sky-600 text-white text-sm font-semibold px-3 py-1 rounded shadow-md z-10">
           <FaStar className="w-3 h-3" />
-          Special offer for you
+          Special offer
         </p>
       )}
 
@@ -101,7 +107,10 @@ export const PopularProductCard = ({
 
         {/* Buttons */}
         <div className="flex items-center gap-3 w-full mt-auto">
-          <button className="flex-1 flex items-center justify-center gap-2 py-1 text-sm bg-sky-700 text-white rounded font-medium hover:bg-sky-600 hover:shadow-md active:scale-95 transition">
+          <button
+            onClick={() => AddToCart(id)}
+            className="flex-1 flex items-center justify-center gap-2 py-1 text-sm bg-sky-700 text-white rounded font-medium hover:bg-sky-600 hover:shadow-md active:scale-95 transition"
+          >
             <FaShoppingCart className="text-white/90" size={20} />
           </button>
 

@@ -21,3 +21,14 @@ export const usePopularProducts = () => {
   const popular = data.filter((product) => product.rating?.rate >= 4.5);
   return { data: popular, error, loading };
 };
+
+export const useProductCategories = () =>
+  useFetch(`${Api_Url}/products/categories`);
+
+// // discount
+// const discounted = products.filter((p) => p.price < 50);
+
+// // newProducts
+// const newProducts = products.filter(
+//   (p) => new Date(p.createdAt) > new Date("2025-01-01")
+// );

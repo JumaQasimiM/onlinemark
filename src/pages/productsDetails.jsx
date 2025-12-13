@@ -1,15 +1,19 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaStar, FaHeart, FaShoppingCart, FaTag } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 import { useProductById, useRelatetProducts } from "../apis/ProductsApi";
 import { PopularProductCard } from "../components/PopularProductCard";
+import { toast } from "react-toastify";
 
 export const ProductDetail = () => {
   const { id } = useParams();
   const { data: productDetail } = useProductById(id);
   const { data: relatetProducts } = useRelatetProducts(productDetail?.category);
 
+  const AddToCart = (id) => {
+    toast.success(`Product ${id} added to cart!`);
+  };
   if (!productDetail)
     return <p className="p-10 text-center text-gray-500">Loading...</p>;
 
@@ -146,6 +150,7 @@ export const ProductDetail = () => {
               <div className="flex w-full md:flex-1 gap-3">
                 {/* Add to Cart */}
                 <motion.button
+                  onClick={() => AddToCart(productDetail.id)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="flex-1 flex items-center justify-center gap-2 
@@ -174,9 +179,14 @@ export const ProductDetail = () => {
         <div className="mt-20">
           <div className="flex justify-between items-center border-b pb-3 mb-5">
             <h4 className="text-xl font-semibold">Related Products</h4>
-            <p className="text-sky-600 hover:underline cursor-pointer">
-              View All
-            </p>
+            <motion.div whileHover={{ scale: 1.02 }}>
+              <Link
+                to="/products"
+                className="text-sky-600 hover:underline cursor-pointer"
+              >
+                View All
+              </Link>
+            </motion.div>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">

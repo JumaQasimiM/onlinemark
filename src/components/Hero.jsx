@@ -1,46 +1,63 @@
 import T3 from "../assets/t3.png";
 import { FaShoppingBag } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 export const Hero = () => {
   return (
-    <section className="relative w-full h-[90vh] mt-20 bg-gradient-to-r from-cyan-700 via-cyan-500 to-cyan-400 overflow-hidden flex flex-col md:flex-row items-center justify-between px-6 md:px-16">
+    <section className="relative w-full min-h-[90vh] mt-20 bg-gray-50 overflow-hidden flex flex-col md:flex-row items-center justify-between px-6 md:px-16 py-10">
       {/* TEXT SECTION */}
-      <div className="w-full md:w-2/3 space-y-6 text-white relative z-20 text-center md:text-left">
-        <span className="inline-block bg-white/30 text-white font-bold px-4 py-1 rounded-xl shadow-lg text-sm uppercase">
+      <motion.div
+        className="w-full md:w-2/3 space-y-6 text-black relative z-20 text-center md:text-left"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <span className="inline-block bg-white/90 text-black font-bold px-4 py-1 rounded-xl shadow-lg text-sm uppercase">
           NEW
         </span>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight drop-shadow-lg">
+
+        <h1 className="text-sky-600  text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight drop-shadow-lg">
           Premium Sky Collection
         </h1>
-        <p className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-md text-white/90 mx-auto md:mx-0 drop-shadow-sm">
+
+        <p className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-md text-black/90 mx-auto md:mx-0 drop-shadow-sm">
           Discover vibrant sky-inspired styles crafted with modern design,
           premium comfort, and exceptional detail. Upgrade your wardrobe today!
         </p>
+
         <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 mt-4 text-base">
-          <button className="flex items-center justify-center gap-2 bg-white text-cyan-600 font-bold px-6 py-3 rounded-xl shadow-2xl hover:shadow-3xl transition transform hover:-translate-y-1">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center justify-center gap-2 bg-black/30 text-cyan-600 font-bold px-6 py-3 rounded-xl shadow-2xl hover:shadow-3xl transition transform hover:-translate-y-1"
+          >
             <FaShoppingBag />
             Shop Now
-          </button>
-          <button className="border border-white text-white px-6 py-3 rounded-xl hover:bg-white/20 transition">
+          </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="border border-sky-700 text-black px-6 py-3 rounded-xl hover:bg-green-600 transition"
+          >
             Explore
-          </button>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
 
       {/* IMAGE SECTION */}
-      <div className="w-full md:w-1/3 flex justify-center items-center relative mt-10 md:mt-0">
-        {/* Main Shirt */}
+      <motion.div
+        className="w-full md:w-1/3 flex justify-center items-center  mt-10 md:mt-0"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8 }}
+      >
         <img
           src={T3}
           alt="Main T-Shirt"
-          className="w-64 sm:w-80 md:w-[400px] lg:w-[500px] object-contain drop-shadow-2xl"
+          className="relative w-64 sm:w-80 md:w-[400px] lg:w-[500px] -mt-100 md:mt-0 object-contain drop-shadow-2xl"
         />
-
-        {/* Floating Badge */}
-        <div className="absolute top-5 right-5 bg-green-500 text-white py-1 px-3 rounded-lg shadow-2xl text-sm font-semibold animate-bounce">
-          ⭐ Special just for you
-        </div>
-      </div>
+      </motion.div>
 
       {/* Decorative Glow Circles */}
       <div className="absolute -top-32 -left-32 w-72 sm:w-96 h-72 sm:h-96 bg-white/20 rounded-full blur-3xl animate-pulse"></div>

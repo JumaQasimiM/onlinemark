@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
 import { FaBarsStaggered } from "react-icons/fa6";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export const Header = () => {
   const [isScroll, setIsScroll] = useState(false);
@@ -22,16 +22,12 @@ export const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300
-        ${
-          isScroll
-            ? "bg-gradient-to-r from-cyan-500 via-cyan-400 to-cyan-300 shadow-lg py-4"
-            : "bg-gradient-to-r from-cyan-600 via-cyan-500 to-cyan-400 py-6"
-        }
+        ${isScroll ? "bg-gray-200 shadow-lg py-4" : "bg-gray-100 py-6"}
       `}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-6">
         {/* Logo */}
-        <div className="text-2xl md:text-3xl font-bold tracking-wide text-sky-900 hover:text-sky-700 transition duration-300">
+        <div className="text-2xl md:text-3xl font-bold tracking-wide text-sky-600 hover:text-sky-700 transition duration-300">
           Premium Sky
         </div>
 
@@ -42,9 +38,9 @@ export const Header = () => {
               <NavLink
                 key={index}
                 to={item.path}
-                className="relative group cursor-pointer text-white hover:text-yellow-300 transition-all duration-300"
+                className="relative group cursor-pointer text-black hover:text-sky-600 transition-all duration-300"
               >
-                <span className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-0 group-hover:w-full h-0.5 bg-yellow-300 transition-all duration-300"></span>
+                <span className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-0 group-hover:w-full h-0.5 bg-sky-300 transition-all duration-300"></span>
                 {item.name}
               </NavLink>
             ))}
@@ -53,14 +49,17 @@ export const Header = () => {
 
         {/* Right Actions */}
         <div className="flex items-center gap-6 font-medium mx-3">
-          <a className="relative text-white hover:text-yellow-300 transition duration-300 cursor-pointer">
+          <Link
+            to="/cart"
+            className="relative text-black hover:text-sky-600 transition duration-300 cursor-pointer"
+          >
             <MdOutlineShoppingCart size={28} />
             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
               1
             </span>
-          </a>
+          </Link>
 
-          <a className="text-white hover:text-yellow-300 transition duration-300 cursor-pointer">
+          <a className="text-black hover:text-sky-600 transition duration-300 cursor-pointer">
             <FaRegUser size={24} />
           </a>
 
