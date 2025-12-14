@@ -22,7 +22,7 @@ export const PopularProductCard = ({
   return (
     <motion.div
       className="relative bg-white/90 backdrop-blur-xl rounded-xl border border-gray-100
-                 cursor-pointer flex flex-col hover:shadow-lg hover:-translate-y-1
+                 cursor-pointer flex flex-col hover:shadow-lg
                  transition-all duration-300 group"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -50,7 +50,7 @@ export const PopularProductCard = ({
             src={thumbnail}
             alt={title}
             className="w-full h-full aspect-[4/3] object-contain p-3"
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.2 }}
             transition={{ duration: 0.35 }}
           />
         </Link>

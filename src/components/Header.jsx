@@ -24,13 +24,13 @@ export const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300
-        ${isScroll ? "bg-gray-200 shadow-lg py-4" : "bg-gray-100 py-6"}
+        ${isScroll ? "bg-gray-200 shadow-lg py-4" : "bg-gray-50 py-6"}
       `}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-6">
         {/* Logo */}
         <div className="text-2xl md:text-3xl font-bold tracking-wide text-sky-600 hover:text-sky-700 transition duration-300">
-          Premium Sky
+          OnlineMartkt
         </div>
 
         {/* Desktop Navigation */}

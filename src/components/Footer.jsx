@@ -13,7 +13,14 @@ import {
   FaCcPaypal,
 } from "react-icons/fa";
 import { SiGooglepay } from "react-icons/si";
+import { Link } from "react-router-dom";
 
+const navbars = [
+  { name: "Home", url: "/" },
+  { name: "Shop", url: "/products" },
+  { name: "About", url: "/about" },
+  { name: "Contact", url: "/contact" },
+];
 export const Footer = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
@@ -56,7 +63,7 @@ export const Footer = () => {
         <div className="space-y-4">
           <h3 className="text-xl font-bold text-slate-950">About Us</h3>
           <p className="text-gray-800 text-sm">
-            Premium Sky is your go-to destination for high-quality, stylish
+            OnlineMartkt is your go-to destination for high-quality, stylish
             apparel combining comfort and modern design.
           </p>
           <div className="flex items-center gap-3">
@@ -77,12 +84,14 @@ export const Footer = () => {
         <div className="space-y-4">
           <h3 className="text-xl font-bold text-slate-950">Quick Links</h3>
           <ul className="space-y-2 text-gray-800">
-            {["Home", "Shop", "About", "Contact"].map((link, idx) => (
-              <li
-                key={idx}
-                className="hover:text-sky-500 transition cursor-pointer"
-              >
-                {link}
+            {navbars.map((link, idx) => (
+              <li key={idx}>
+                <Link
+                  to={link.url}
+                  className="hover:text-sky-500 transition cursor-pointer"
+                >
+                  {link.name}
+                </Link>
               </li>
             ))}
           </ul>
@@ -138,7 +147,7 @@ export const Footer = () => {
       {/* Bottom Section */}
       <div className="border-t border-gray-800 py-6 flex flex-col sm:flex-row justify-between items-center px-6 md:px-16 gap-4">
         <p className="text-gray-800 text-sm">
-          &copy; 2025 Premium Sky. All rights reserved.
+          &copy; 2025 OnlineMartkt. All rights reserved.
         </p>
 
         <p className="text-gray-800 text-sm px-2">

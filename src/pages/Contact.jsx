@@ -18,13 +18,13 @@ export const Contact = () => {
           </div>
 
           {/* Image */}
-          <div className="hidden md:block">
+          {/* <div className="hidden md:block">
             <img
               src={image}
               alt="Contact"
               className="w-full h-112 object-cover rounded-xl"
             />
-          </div>
+          </div> */}
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
@@ -64,8 +64,8 @@ export const Contact = () => {
                 </h3>
                 <p className="text-lg text-gray-900 leading-relaxed">
                   OnlineMarkt GmbH <br />
-                  Friedrichstraße 123 <br />
-                  10117 Berlin, Germany
+                  AbcStraße 32. <br />
+                  Stuttgart 74000, Germany
                 </p>
               </div>
             </div>
