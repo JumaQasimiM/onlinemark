@@ -1,8 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import T from "../assets/t1.png";
+import { FaTrash } from "react-icons/fa";
+import { useState } from "react";
 
 export const Cart = () => {
+  const [qauntity, setQauntity] = useState(0);
   const navigate = useNavigate();
+  // add and sub
+  const add = () => {
+    setQauntity((prev) => prev + 1);
+  };
+  const sub = () => {
+    setQauntity((prev) => (prev > 0 ? prev - 1 : 0));
+  };
+
   return (
     <section className="w-full py-12 bg-gray-50 mt-23">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6">
@@ -20,6 +31,7 @@ export const Cart = () => {
                   <th className="p-4">Price</th>
                   <th className="p-4">Qty</th>
                   <th className="p-4">Total</th>
+                  <th className="p-4"></th>
                 </tr>
               </thead>
 
@@ -46,24 +58,36 @@ export const Cart = () => {
                   <td className="p-4 font-medium whitespace-nowrap">$20</td>
 
                   <td className="p-4 whitespace-nowrap">
-                    <div className="flex items-center gap-2 border rounded w-fit">
-                      <button className="px-3 py-1 text-gray-600 hover:bg-gray-100">
+                    <div className="flex items-center gap-2 border w-fit">
+                      <button
+                        onClick={() => sub()}
+                        className="px-3 py-1 text-gray-600 hover:bg-red-200"
+                      >
                         −
                       </button>
-                      <span className="px-2">2</span>
-                      <button className="px-3 py-1 text-gray-600 hover:bg-gray-100">
+                      <span className="px-2">{qauntity}</span>
+                      <button
+                        onClick={() => add()}
+                        className="px-3 py-1 text-gray-600 hover:bg-green-200"
+                      >
                         +
                       </button>
                     </div>
                   </td>
 
                   <td className="p-4 font-semibold whitespace-nowrap">$40</td>
+                  <td className="p-4 font-semibold whitespace-nowrap">
+                    <FaTrash
+                      size={20}
+                      className="text-red-500 cursor-pointer hover:-translate-y-1 transition"
+                    />
+                  </td>
                 </tr>
               </tbody>
 
               <tfoot>
                 <tr className="bg-gray-50">
-                  <td colSpan={7} className="p-5">
+                  <td colSpan={8} className="p-5">
                     <div className="flex flex-col md:flex-row justify-between text-sm font-medium gap-2 md:gap-0">
                       <p>
                         Total items: <span className="font-semibold">12</span>

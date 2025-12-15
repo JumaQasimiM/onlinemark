@@ -2,69 +2,101 @@ import Einkaufen from "../assets/einkaufen.jpg";
 import { FaShoppingBag } from "react-icons/fa";
 import { motion } from "framer-motion";
 
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.25,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 40 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: "easeOut" },
+  },
+};
+
 export const Hero = () => {
   return (
-    <section className="w-full min-h-[90vh] mt-20 bg-gray-50 ">
-      <div className="relative max-w-7xl mx-auto overflow-hidden flex flex-col md:flex-row items-center justify-between px-6 md:px-16 py-10">
-        {/* TEXT SECTION */}
+    <section className="w-full min-h-[90vh] mt-20 bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+      <div className="max-w-7xl mx-auto px-6 md:px-16 py-20 flex flex-col md:flex-row items-center gap-14">
+        {/* Text Content */}
         <motion.div
-          className="w-full md:w-2/3 space-y-6 text-black relative z-20 text-center md:text-left"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="w-full md:w-1/2 text-white"
         >
-          <span className="inline-block bg-white/90 text-black font-bold px-4 py-1 rounded-xl shadow-lg text-sm uppercase">
-            NEW
-          </span>
+          <motion.span
+            variants={item}
+            className="inline-block mb-5 px-5 py-1 border border-white/30 rounded-full text-sm tracking-widest uppercase"
+          >
+            New Collection 2025
+          </motion.span>
 
-          <h1 className="text-sky-600  text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight drop-shadow-lg">
-            OnlineMartkt Collection
-          </h1>
+          <motion.h1
+            variants={item}
+            className="text-4xl md:text-6xl font-extrabold leading-tight mb-6"
+          >
+            Shopping That <br />
+            Feels <span className="text-amber-400">Effortless</span>
+          </motion.h1>
 
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-md text-black/90 mx-auto md:mx-0 drop-shadow-sm">
-            Discover vibrant sky-inspired styles crafted with modern design,
-            premium comfort, and exceptional detail. Upgrade your wardrobe
-            today!
-          </p>
+          <motion.p
+            variants={item}
+            className="text-gray-300 text-lg mb-10 max-w-lg"
+          >
+            Premium products, fast delivery, and secure payments — everything
+            you need for a better shopping experience.
+          </motion.p>
 
-          <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 mt-4 text-base">
+          <motion.div variants={item} className="flex gap-4">
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center justify-center gap-2 bg-black/30 text-cyan-600 font-bold px-6 py-3 rounded-xl shadow-2xl hover:shadow-3xl transition transform hover:-translate-y-1"
+              className="flex items-center gap-2 px-8 py-3 text-sm bg-amber-400 text-black font-semibold rounded-md"
             >
               <FaShoppingBag />
               Shop Now
             </motion.button>
 
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
-              className="border border-sky-700 text-black px-6 py-3 rounded-xl hover:bg-green-600 transition"
+              className="px-8 py-3 text-sm border border-white rounded-md hover:bg-white hover:text-black transition"
             >
-              Explore
+              View Deals
             </motion.button>
-          </div>
+          </motion.div>
         </motion.div>
 
-        {/* IMAGE SECTION */}
+        {/* Image */}
         <motion.div
-          className="w-full md:w-1/3 flex justify-center items-center  mt-10 md:mt-0"
-          initial={{ opacity: 0, x: 50 }}
+          initial={{ opacity: 0, x: 80 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 1 }}
+          className="w-full md:w-1/2 relative"
         >
-          <img
+          <motion.img
             src={Einkaufen}
-            alt="Main T-Shirt"
-            className="relative w-64 h-100 sm:w-80 md:w-[500px] lg:w-[500px] -mt-100 md:mt-0 object-contain drop-shadow-2xl"
+            alt="Online Shopping"
+            className="w-full max-w-lg mx-auto rounded-xl shadow-2xl"
+            animate={{ y: [0, -15, 0] }}
+            transition={{
+              repeat: Infinity,
+              duration: 4,
+              ease: "easeInOut",
+            }}
           />
+
+          {/* Glow effect */}
+          <div className="absolute -bottom-10 -right-10 w-72 h-72 bg-amber-400/30 rounded-full blur-3xl"></div>
         </motion.div>
-
-        {/* Decorative Glow Circles */}
-        <div className="absolute -top-32 -left-32 w-72 sm:w-96 h-72 sm:h-96 bg-white/20 rounded-full blur-3xl animate-pulse"></div>
-
-        <div className="absolute -bottom-32 -right-32 w-72 sm:w-96 h-72 sm:h-96 bg-white/20 rounded-full blur-3xl animate-spin"></div>
       </div>
     </section>
   );

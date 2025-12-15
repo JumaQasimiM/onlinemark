@@ -1,103 +1,93 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaShoppingCart } from "react-icons/fa";
 import img1 from "../assets/blueShirt.jpg";
 import img2 from "../assets/grayTshirt.jpg";
 
 export const Gallery = () => {
-  const images = [img1, img2, img1, img2, img1];
+  const images = [img1, img2, img1, img2];
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
+  const container = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.15 } },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.7, ease: "easeOut" },
+    },
+  };
 
   return (
-    <div className="w-full bg-slate-100 p-1">
-      <section className="max-w-7xl mx-auto my-16 px-4 md:px-8 overflow-hidden">
-        {/* Title */}
-        <div className="mb-8">
-          <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 flex items-center gap-3 border-l-4 border-sky-500 pl-4">
-            Gallery
+    <section className="w-full bg-gray-50 py-24">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="mb-12 text-center"
+        >
+          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900">
+            Trending Styles
           </h2>
-          <p className="text-gray-600 mt-2 max-w-2xl">
-            Discover our premium collection, handcrafted for style and comfort.
+          <p className="text-gray-600 mt-3 max-w-xl mx-auto">
+            Explore our latest collection featuring premium quality and trendy
+            designs.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Grid layout */}
-        <div className="flex flex-col md:flex-row gap-6 justify-center">
-          {/* Column 1 - Image 1 */}
-          <motion.div
-            className="relative w-full md:w-1/4 h-64 md:h-[70vh] rounded-2xl overflow-hidden"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.img
-              src={images[0]}
-              alt="Product 1"
-              className="w-full h-full object-cover rounded-2xl shadow-xl"
-              whileHover={{
-                scale: 1.05,
-                rotate: 1,
-                boxShadow: "0 15px 35px rgba(0,0,0,0.25)",
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          className="flex flex-wrap justify-center -space-x-10 md:-space-x-16"
+        >
+          {images.map((img, i) => (
+            <motion.div
+              key={i}
+              variants={item}
+              onMouseEnter={() => setHoveredIndex(i)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              className="relative w-72 h-96 md:w-80 md:h-[28rem] rounded-3xl overflow-hidden shadow-2xl bg-white transform hover:-translate-y-2 hover:scale-105 transition cursor-pointer"
+              style={{
+                zIndex: hoveredIndex === i ? 100 : images.length - i,
               }}
-            />
-            <div className="absolute top-4 left-4 bg-sky-500 text-white py-1 px-3 rounded-lg shadow-lg text-sm font-semibold flex items-center gap-1">
-              <FaStar className="text-amber-500" /> Most Popular
-            </div>
-          </motion.div>
+            >
+              <img
+                src={img}
+                alt={`Product ${i + 1}`}
+                className="w-full h-full object-cover rounded-3xl"
+              />
 
-          {/* Column 2 - Images 2 & 3 */}
-          <div className="flex flex-col gap-6 w-full md:w-1/4">
-            {images.slice(1, 3).map((img, i) => (
               <motion.div
-                key={i + 2}
-                className="h-64 md:h-[34vh] relative rounded-2xl overflow-hidden"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{
+                  delay: 0.3 + i * 0.1,
+                  type: "spring",
+                  stiffness: 200,
+                }}
+                className="absolute top-4 left-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-lg text-sm flex items-center gap-1 shadow-md"
               >
-                <motion.img
-                  src={img}
-                  alt={`Product ${i + 2}`}
-                  className="w-full h-full object-cover rounded-2xl shadow-xl border border-sky-200"
-                  whileHover={{
-                    scale: 1.05,
-                    rotate: 1,
-                    boxShadow: "0 15px 35px rgba(0,0,0,0.25)",
-                  }}
-                />
-                <div className="absolute top-4 left-4 bg-green-500 text-white py-1 px-3 rounded-lg shadow-lg text-sm font-semibold flex items-center gap-1">
-                  <FaStar /> New Product
-                </div>
+                <FaStar className="text-white" /> Hot
               </motion.div>
-            ))}
-          </div>
 
-          {/* Column 3 - Images 4 & 5 */}
-          <div className="flex flex-col gap-6 w-full md:w-1/4">
-            {images.slice(3, 5).map((img, i) => (
-              <motion.div
-                key={i + 4}
-                className="h-64 md:h-[34vh] relative rounded-2xl overflow-hidden"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: i * 0.2 }}
-              >
-                <motion.img
-                  src={img}
-                  alt={`Product ${i + 4}`}
-                  className="w-full h-full object-cover rounded-2xl shadow-xl border border-sky-200"
-                  whileHover={{
-                    scale: 1.05,
-                    rotate: 1,
-                    boxShadow: "0 15px 35px rgba(0,0,0,0.25)",
-                  }}
-                />
-                <div className="absolute top-4 left-4 bg-sky-500 text-white py-1 px-3 rounded-lg shadow-lg text-sm font-semibold flex items-center gap-1">
-                  <FaStar className="text-amber-500" /> Popular
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-    </div>
+              <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition flex items-end p-4 rounded-3xl">
+                <button className="w-full bg-white text-gray-900 py-2 rounded-md font-semibold flex items-center justify-center gap-2 hover:bg-gray-100 transition">
+                  <FaShoppingCart /> Add to Cart
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
   );
 };
