@@ -3,8 +3,10 @@ import { MdLocalShipping, MdStore } from "react-icons/md";
 import { FaPaypal, FaCreditCard } from "react-icons/fa";
 import { SiGooglepay } from "react-icons/si";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const Checkout = () => {
+  const navigate = useNavigate();
   // --- States ---
   const [showPickup, setShowPickup] = useState(false);
   const [showShip, setShip] = useState(true);
@@ -20,10 +22,10 @@ export const Checkout = () => {
     setShowPickup(false);
   };
 
-  const handlePlaceOrder = () => {
-    if (!paymentMethod) return toast.error("Please select a payment method");
-    toast.success(`Processing order with ${paymentMethod}`);
-  };
+  // const handlePlaceOrder = () => {
+  //   if (!paymentMethod) return toast.error("Please select a payment method");
+  //   toast.success(`Processing order with ${paymentMethod}`);
+  // };
 
   return (
     <section className="bg-gray-50 py-23">
@@ -233,7 +235,8 @@ export const Checkout = () => {
               ← Return to Cart
             </a>
             <button
-              onClick={handlePlaceOrder}
+              onClick={() => navigate("/receivedOrder")}
+              // onClick={handlePlaceOrder}
               className="px-6 py-3 bg-gray-900 text-white rounded-md hover:bg-black"
             >
               Place Order
