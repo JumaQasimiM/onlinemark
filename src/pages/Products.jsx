@@ -1,7 +1,7 @@
 import { FaSearch } from "react-icons/fa";
 import { useProductCategories, useProducts } from "../apis/ProductsApi";
 import { PopularProductCard } from "../components/PopularProductCard";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const Products = () => {

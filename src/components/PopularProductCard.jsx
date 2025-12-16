@@ -45,15 +45,15 @@ export const PopularProductCard = ({
 
       {/* Image */}
       <div className="bg-gray-200 w-[90%] h-50 mx-auto m-2 p-3 rounded-md overflow-hidden">
-        <Link to={"/products/" + id}>
-          <motion.img
-            src={thumbnail}
-            alt={title}
-            className="w-full h-full aspect-[4/3] object-contain p-3"
-            whileHover={{ scale: 1.2 }}
-            transition={{ duration: 0.35 }}
-          />
-        </Link>
+        {/* <Link to={"/products/" + id}> */}
+        <motion.img
+          src={thumbnail}
+          alt={title}
+          className="w-full h-full aspect-[4/3] object-contain p-3"
+          whileHover={{ scale: 1.2 }}
+          transition={{ duration: 0.35 }}
+        />
+        {/* </Link> */}
       </div>
 
       {/* ❤️ Favorite + 🛒 Cart (Hover + Tap Support) */}
