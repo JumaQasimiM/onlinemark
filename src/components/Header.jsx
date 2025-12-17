@@ -61,9 +61,12 @@ export const Header = () => {
             </span>
           </Link>
 
-          <a className="text-black hover:text-sky-600 transition duration-300 cursor-pointer">
+          <Link
+            to="/login"
+            className="text-black hover:text-sky-600 transition duration-300 cursor-pointer"
+          >
             <FaRegUser size={24} />
-          </a>
+          </Link>
 
           {/* Mobile Menu Toggle */}
           <button

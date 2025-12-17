@@ -19,14 +19,24 @@ export const CartProvider = ({ children }) => {
   const addToCart = (product) => {
     setCart((prev) => {
       const existing = prev.find((p) => p.id === product.id);
+
+      let updatedCart;
+
       if (existing) {
-        return prev.map((p) =>
+        updatedCart = prev.map((p) =>
           p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
         );
+      } else {
+        updatedCart = [...prev, { ...product, quantity: 1 }];
       }
-      return [...prev, { ...product, quantity: 1 }];
+
+      // Save updated cart to localStorage
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+      return updatedCart;
     });
   };
+
   return (
     <CartContext.Provider
       value={{
