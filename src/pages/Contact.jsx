@@ -2,6 +2,21 @@ import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 
 import image from "../assets/t1.png";
 export const Contact = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (e.target === required) {
+      ("*:text-red-500");
+    }
+  };
+  const Label = ({ text, required }) => (
+    <label className="block text-sm text-gray-600 mb-2">
+      {text}
+      {required && (
+        <span className="text-red-500 ml-1 group-border:text-red-400">*</span>
+      )}
+    </label>
+  );
+
   return (
     <section className="min-h-screen bg-white py-24 px-4">
       <div className="max-w-6xl mx-auto">
@@ -73,21 +88,23 @@ export const Contact = () => {
 
           {/* Right: Form */}
           <div>
-            <form className="space-y-8">
+            <form className="space-y-8" onSubmit={handleSubmit}>
               <div>
-                <label className="block text-sm text-gray-600 mb-2">Name</label>
+                <Label text="Name" required />
                 <input
+                  required
+                  name="name"
                   type="text"
-                  className="w-full border-b border-gray-300 py-3 text-gray-900
+                  className="group w-full border-b border-gray-300 py-3 text-gray-900
                              focus:outline-none focus:border-sky-600"
                 />
               </div>
 
               <div>
-                <label className="block text-sm text-gray-600 mb-2">
-                  Email
-                </label>
+                <Label text="Email" required />
                 <input
+                  required
+                  name="email"
                   type="email"
                   className="w-full border-b border-gray-300 py-3 text-gray-900
                              focus:outline-none focus:border-sky-600"
@@ -95,10 +112,10 @@ export const Contact = () => {
               </div>
 
               <div>
-                <label className="block text-sm text-gray-600 mb-2">
-                  Message
-                </label>
+                <Label text="Message" required />
                 <textarea
+                  required
+                  name="message"
                   rows="4"
                   className="w-full border-b border-gray-300 py-3 text-gray-900
                              focus:outline-none focus:border-sky-600 resize-none"

@@ -1,7 +1,16 @@
+import { useState } from "react";
 import loginImg from "../assets/einkaufen.jpg";
+import { validation } from "../apis/utility/validation";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const Login = () => {
-  const login = (e) => {
+  const [error, setError] = useState({
+    username: "",
+    password: "",
+  });
+  const navigate = useNavigate();
+  const loginHandle = (e) => {
     e.preventDefault();
     const formDate = new FormData(e.target);
     const formValues = {
@@ -10,7 +19,24 @@ export const Login = () => {
     };
     // console.log(formValues);
     // validation
+    const errors = validation(formValues);
+    setError(errors);
+
+    // stop submit if any error exists
+    if (errors.username || errors.password) return;
+
+    // login logic here
+    if (
+      formValues.username === "juma.qasimi" &&
+      formValues.password === "123"
+    ) {
+      localStorage.setItem("user", formValues.username);
+      navigate("/cart");
+    } else {
+      toast.error("usernaem or password is incorect.");
+    }
   };
+
   return (
     <section className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
       <div className="w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden md:grid md:grid-cols-2">
@@ -46,7 +72,7 @@ export const Login = () => {
             </p>
 
             {/* Form */}
-            <form className="space-y-6" onSubmit={login}>
+            <form className="space-y-6" onSubmit={loginHandle}>
               {/* Username */}
               <div>
                 <label
@@ -62,6 +88,7 @@ export const Login = () => {
                   placeholder="juma.qasimi"
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                 />
+                <p className="text-sm text-red-600">{error.username}</p>
               </div>
 
               {/* Password */}
@@ -79,6 +106,7 @@ export const Login = () => {
                   placeholder="••••••••"
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                 />
+                <p className="text-sm text-red-600">{error.password}</p>
               </div>
 
               {/* Forgot Password */}

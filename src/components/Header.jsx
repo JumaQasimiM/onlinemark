@@ -1,12 +1,25 @@
 import { useEffect, useState } from "react";
 import { MdOutlineShoppingCart } from "react-icons/md";
-import { FaRegUser } from "react-icons/fa";
+import { FaRegUser, FaSignOutAlt } from "react-icons/fa";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { Link, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 export const Header = () => {
   const [isScroll, setIsScroll] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // get user islogedin or not
+  const [isUser, setIsUser] = useState(null);
+  useEffect(() => {
+    const handleStorage = () => {
+      setIsUser(localStorage.getItem("user"));
+    };
+
+    window.addEventListener("storage", handleStorage);
+    handleStorage();
+
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
 
   const navItem = [
     { name: "Home", path: "/" },
@@ -21,6 +34,11 @@ export const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // logout
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    window.location.reload();
+  };
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300
@@ -40,9 +58,18 @@ export const Header = () => {
               <NavLink
                 key={index}
                 to={item.path}
-                className="relative group cursor-pointer text-black hover:text-sky-600 transition-all duration-300"
+                className={({ isActive }) =>
+                  `relative group cursor-pointer transition ${
+                    isActive
+                      ? "text-sky-400 font-bold"
+                      : "text-black hover:text-sky-600"
+                  }`
+                }
               >
-                <span className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-0 group-hover:w-full h-0.5 bg-sky-300 transition-all duration-300"></span>
+                <span
+                  className={`absolute left-1/2 -translate-x-1/2 -bottom-1 h-0.5 bg-sky-300 transition-all duration-300
+      ${"w-0 group-hover:w-full"}`}
+                />
                 {item.name}
               </NavLink>
             ))}
@@ -61,12 +88,22 @@ export const Header = () => {
             </span>
           </Link>
 
-          <Link
-            to="/login"
-            className="text-black hover:text-sky-600 transition duration-300 cursor-pointer"
-          >
-            <FaRegUser size={24} />
-          </Link>
+          {!isUser && (
+            <Link
+              to="/login"
+              className="text-black hover:text-sky-600 transition duration-300 cursor-pointer"
+            >
+              <FaRegUser size={24} />
+            </Link>
+          )}
+          {isUser && (
+            <button
+              onClick={handleLogout}
+              className="text-black hover:text-sky-600 transition duration-300 cursor-pointer"
+            >
+              <FaSignOutAlt size={24} />
+            </button>
+          )}
 
           {/* Mobile Menu Toggle */}
           <button
