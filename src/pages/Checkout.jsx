@@ -1,17 +1,156 @@
 import { useState } from "react";
-import { MdLocalShipping, MdStore } from "react-icons/md";
+import {
+  MdLocalShipping,
+  MdStore,
+  MdEmail,
+  MdHome,
+  MdLocationCity,
+} from "react-icons/md";
 import { FaPaypal, FaCreditCard } from "react-icons/fa";
 import { SiGooglepay } from "react-icons/si";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export const Checkout = () => {
-  const navigate = useNavigate();
+  // email
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+
+  // country
+  const [country, setCountry] = useState("");
+  //vorname
+  const [firstname, setFirstname] = useState("");
+  const [firstnameError, setFirstnameError] = useState("");
+  //nachname
+  const [lastname, setLastName] = useState("");
+  const [lastnameError, setLastNoError] = useState("");
+  //straße
+  const [street, setStreet] = useState("");
+  const [streetError, setStreetError] = useState("");
+  //hausnummer
+  const [homeNo, setHomeNo] = useState("");
+  const [homeNoError, setHomeNoError] = useState("");
+  //zip code
+  const [zip, setZIP] = useState("");
+  const [zipError, setZipError] = useState("");
+  // city
+  const [city, setCity] = useState("");
+  const [cityError, setCityError] = useState("");
+  // use info
+  const [useInfo, setUseInfo] = useState(true);
   // --- States ---
   const [showPickup, setShowPickup] = useState(false);
   const [showShip, setShip] = useState(true);
   const [paymentMethod, setPaymentMethod] = useState("card");
 
+  // hooks for card
+  const [cardNumber, setCardNumber] = useState("");
+  const [date, setDate] = useState("");
+  const [cvc, setCVC] = useState("");
+  const [CardholderName, setCardholderName] = useState("");
+  const navigate = useNavigate();
+
+  // payment with paypal
+  const [paypalAcout, setPaypalAcount] = useState("");
+  // payment with google pay
+  const [googlepayNumber, setGooglepayNumber] = useState("");
+  // handleEmail
+  const handleEmail = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!value) {
+      setEmailError("email is requerd!");
+      console.log("email is requerd!");
+    } else if (!emailRegex.test(value)) {
+      setEmailError("Enter a valid Email");
+      console.log("Enter a valid Email");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  // firstname
+  const handleFirstname = (e) => {
+    const value = e.target.value;
+    setFirstname(value);
+    if (!value) {
+      setFirstnameError("first name is requerd.");
+    } else if (value.length < 3) {
+      setFirstnameError("invalid first name.must atlest 3 charectar.");
+    } else {
+      setFirstnameError("");
+    }
+  };
+  // lastname
+  const handleLasttname = (e) => {
+    const value = e.target.value;
+    setLastName(value);
+    if (!value) {
+      setLastNoError("last name is requerd.");
+    } else if (value.length < 3) {
+      setLastNoError("invalid last name.must atlest 3 charectar.");
+    } else {
+      setLastNoError("");
+    }
+  };
+  // street
+  const handleStreet = (e) => {
+    const value = e.target.value;
+    setStreet(value);
+    if (!value) {
+      setStreetError("Street is requerd.");
+    } else if (value.length < 3) {
+      setStreetError("invalid street.must atlest 3 charectar.");
+    } else {
+      setStreetError("");
+    }
+  };
+  // home nummber
+  const handleHomeNO = (e) => {
+    const value = e.target.value;
+    setHomeNo(value);
+    if (!value) {
+      setHomeNoError("Home nummber is requerd.");
+    } else if (!/^\d{1,}$/.test(value)) {
+      setHomeNoError("Home number must be at least 1 digit.");
+    } else {
+      setHomeNoError("");
+    }
+  };
+  // zip code
+  const handleZIP = (e) => {
+    const value = e.target.value;
+    setZIP(value);
+    if (!value) {
+      setZipError("Zip code is requerd.");
+    } else if (!/^\d{4,}$/.test(value)) {
+      setZipError("ZIP code must be at least 3 characters.");
+    } else {
+      setZipError("");
+    }
+  };
+  //city
+  const handleCity = (e) => {
+    const value = e.target.value;
+    setCity(value);
+    if (!value) {
+      setCityError("city name is requerd.");
+    } else if (value.length < 3) {
+      setCityError("invalid city name. must atlest 3 charectar.");
+    } else {
+      setCityError("");
+    }
+  };
+  // use info checkbox for billing address
+  const handleUseinfo = (e) => {
+    if (e.target.checked) {
+      setUseInfo(true);
+      localStorage.setItem("bllingAddress", useInfo);
+    } else {
+      setUseInfo(false);
+    }
+  };
   // --- Handlers ---
   const handleShowPickup = () => {
     setShowPickup(true);
@@ -22,11 +161,97 @@ export const Checkout = () => {
     setShowPickup(false);
   };
 
-  // const handlePlaceOrder = () => {
-  //   if (!paymentMethod) return toast.error("Please select a payment method");
-  //   toast.success(`Processing order with ${paymentMethod}`);
-  // };
+  // payment with card
+  const handleCard = () => {
+    if (!cardNumber || !date || !CardholderName || !cvc) {
+      toast.error("Please fix the errors in the Card details");
+      return false;
+    }
+    return true;
+  };
+  const handlePaypal = () => {
+    if (!paypalAcout || paypalAcout.length < 5) {
+      toast.error(
+        "Please fix the errors in the paypalAcout and must atlest 5 characters"
+      );
+      return false;
+    }
+    return true;
+  };
+  const handleGooglepay = () => {
+    if (!googlepayNumber || googlepayNumber.length < 5) {
+      toast.error(
+        "Please fix the errors in the googlepayNumber and must atlest 5 characters"
+      );
+      return false;
+    }
+    return true;
+  };
 
+  const handlePlaceOrder = () => {
+    const isFormValid =
+      !emailError &&
+      !firstnameError &&
+      !lastnameError &&
+      !streetError &&
+      !homeNoError &&
+      !zipError &&
+      !cityError &&
+      email &&
+      firstname &&
+      lastname &&
+      street &&
+      homeNo &&
+      zip &&
+      city &&
+      country;
+
+    if (!isFormValid) {
+      toast.error("Please fill all required fields correctly");
+      return;
+    }
+
+    let isValidPayment = false;
+
+    if (paymentMethod === "card") {
+      isValidPayment = handleCard();
+    }
+
+    if (paymentMethod === "paypal") {
+      isValidPayment = handlePaypal();
+    }
+
+    if (paymentMethod === "googlepay") {
+      isValidPayment = handleGooglepay();
+    }
+
+    if (!isValidPayment) return;
+
+    toast.success(`Processing order with ${paymentMethod}`);
+    const Address = {
+      firstname,
+      lastname,
+      email,
+      street,
+      homeNo,
+      zip,
+      city,
+      country,
+    };
+    const orderDate = new Date();
+    const orderDetail = { paymentMethod, email, orderDate };
+    localStorage.setItem("orderDetail", JSON.stringify(orderDetail));
+    localStorage.setItem("address", JSON.stringify(Address));
+    navigate("/receivedOrder");
+  };
+
+  const countries = [
+    { id: 1, name: "Afghanistan" },
+    { id: 2, name: "USA" },
+    { id: 3, name: "Germany" },
+    { id: 4, name: "Iran" },
+    { id: 5, name: "UAE" },
+  ];
   return (
     <section className="bg-gray-50 py-23">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -34,15 +259,24 @@ export const Checkout = () => {
         <div className="lg:col-span-2 bg-white rounded-lg shadow-sm p-6 space-y-6">
           {/* --- Contact --- */}
           <div>
-            <h2 className="text-lg font-semibold mb-2">Contact Information</h2>
+            <h2 className="text-lg font-semibold mb-2">
+              Contact Information <span className="text-red-400">*</span>
+            </h2>
             <input
+              value={email}
+              onChange={handleEmail}
               type="email"
               placeholder="Email address"
-              className="w-full px-4 py-2 border rounded focus:outline-none"
+              className={`w-full px-4 py-2 border rounded focus:outline-none ${
+                emailError ? "border-red-400" : "border-gray-200"
+              }`}
             />
             <p className="text-sm text-gray-500 mt-1">
               You are currently checking out as a guest.
             </p>
+            {emailError && (
+              <p className="text-sm text-red-500 mt-1">{emailError}</p>
+            )}
           </div>
 
           {/* --- Delivery --- */}
@@ -73,8 +307,8 @@ export const Checkout = () => {
           {showPickup && (
             <div className="mt-4 space-y-2 border p-3 rounded">
               <label className="flex items-center gap-2 p-2 cursor-pointer">
-                <input type="radio" name="pickup" /> Rathaus 13, Heilbronn
-                74546, Germany
+                <input type="radio" name="pickup" />
+                Rathaus 13, Heilbronn 74546, Germany
               </label>
               <label className="flex items-center gap-2 p-2 cursor-pointer">
                 <input type="radio" name="pickup" /> Rathaus 13, 74546 Öhingen,
@@ -86,39 +320,123 @@ export const Checkout = () => {
           {/* --- Shipping Address --- */}
           {showShip && (
             <div className="mt-4">
-              <h2 className="text-lg font-semibold mb-3">Shipping Address</h2>
+              <h2 className="text-lg font-semibold mb-3">
+                Shipping Address <span className="text-red-400">*</span>
+              </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input
-                  placeholder="Country"
-                  className="border py-2 px-2 rounded focus:outline-none "
-                />
-                <input
-                  placeholder="First Name"
-                  className="border py-2 px-2 rounded focus:outline-none "
-                />
-                <input
-                  placeholder="Last Name"
-                  className="border py-2 px-2 rounded focus:outline-none "
-                />
-                <input
-                  placeholder="Street"
-                  className="border py-2 px-2 rounded focus:outline-none "
-                />
-                <input
-                  placeholder="House Number"
-                  className="border py-2 px-2 rounded focus:outline-none "
-                />
-                <input
-                  placeholder="ZIP Code"
-                  className="border py-2 px-2 rounded focus:outline-none "
-                />
-                <input
-                  placeholder="City"
-                  className="border py-2 px-2 rounded focus:outline-none "
-                />
+                {/* contry */}
+
+                <select
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                  required
+                  className="border py-2 px-2 rounded focus:outline-none"
+                >
+                  <option value="" disabled>
+                    Select country
+                  </option>
+
+                  {countries.map((c) => (
+                    <option key={c.id} value={c.name}>
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
+
+                <div>
+                  <input
+                    value={firstname}
+                    onChange={handleFirstname}
+                    name=""
+                    placeholder="First Name"
+                    className={`w-full px-4 py-2 border rounded focus:outline-none ${
+                      firstnameError ? "border-red-400" : "border-gray-200"
+                    }`}
+                  />
+                  {firstnameError && (
+                    <p className="text-sm text-red-500 mt-0">
+                      {firstnameError}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <input
+                    value={lastname}
+                    onChange={handleLasttname}
+                    placeholder="Last Name"
+                    className={`w-full px-4 py-2 border rounded focus:outline-none ${
+                      lastnameError ? "border-red-400" : "border-gray-200"
+                    }`}
+                  />
+                  {lastnameError && (
+                    <p className="text-sm text-red-500 mt-0">{lastnameError}</p>
+                  )}
+                </div>
+                {/* street */}
+                <div>
+                  <input
+                    value={street}
+                    onChange={handleStreet}
+                    placeholder="Street"
+                    className={`w-full px-4 py-2 border rounded focus:outline-none ${
+                      streetError ? "border-red-400" : "border-gray-200"
+                    }`}
+                  />
+                  {streetError && (
+                    <p className="text-sm text-red-500 mt-0">{streetError}</p>
+                  )}
+                </div>
+                {/* home nummber */}
+                <div>
+                  <input
+                    value={homeNo}
+                    onChange={handleHomeNO}
+                    placeholder="House Number"
+                    className={`w-full px-4 py-2 border rounded focus:outline-none ${
+                      homeNoError ? "border-red-400" : "border-gray-200"
+                    }`}
+                  />
+                  {homeNoError && (
+                    <p className="text-sm text-red-500 mt-0">{homeNoError}</p>
+                  )}
+                </div>
+                {/* zip code */}
+                <div>
+                  {" "}
+                  <input
+                    value={zip}
+                    onChange={handleZIP}
+                    placeholder="ZIP Code"
+                    className={`w-full px-4 py-2 border rounded focus:outline-none ${
+                      zipError ? "border-red-400" : "border-gray-200"
+                    }`}
+                  />
+                  {zipError && (
+                    <p className="text-sm text-red-500 mt-0">{zipError}</p>
+                  )}
+                </div>
+                {/*citx  */}
+                <div>
+                  <input
+                    value={city}
+                    onChange={handleCity}
+                    placeholder="City"
+                    className={`w-full px-4 py-2 border rounded focus:outline-none ${
+                      cityError ? "border-red-400" : "border-gray-200"
+                    }`}
+                  />
+                  {cityError && (
+                    <p className="text-sm text-red-500 mt-0">{cityError}</p>
+                  )}
+                </div>
               </div>
               <label className="flex items-center gap-2 mt-2 text-sm">
-                <input type="checkbox" /> Use same address for billing
+                <input
+                  type="checkbox"
+                  name="useinfo"
+                  onChange={handleUseinfo}
+                />{" "}
+                Use same address for billing
               </label>
             </div>
           )}
@@ -146,18 +464,30 @@ export const Checkout = () => {
                   {paymentMethod === "card" && (
                     <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-3">
                       <input
+                        value={cardNumber}
+                        onChange={(e) => setCardNumber(e.target.value)}
                         placeholder="Card Number"
-                        className="col-span-2 border py-2 px-2 rounded "
+                        className="border py-2 px-2 rounded "
                       />
+
                       <input
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                        name="date"
                         placeholder="MM / YY"
                         className="border py-2 px-2 rounded "
                       />
                       <input
+                        value={cvc}
+                        onChange={(e) => setCVC(e.target.value)}
+                        name="CVC"
                         placeholder="CVC"
                         className="border py-2 px-2 rounded "
                       />
                       <input
+                        value={CardholderName}
+                        onChange={(e) => setCardholderName(e.target.value)}
+                        name="CardholderName"
                         placeholder="Cardholder Name"
                         className="col-span-2 border py-2 px-2 rounded "
                       />
@@ -183,9 +513,15 @@ export const Checkout = () => {
                   <FaPaypal size={24} color="#003087" />
                   <p className="font-medium">PayPal</p>
                   {paymentMethod === "paypal" && (
-                    <button className="mt-2 w-full bg-blue-600 text-white py-2 rounded-md">
-                      Continue with PayPal
-                    </button>
+                    // <button className="mt-2 w-full bg-blue-600 text-white py-2 rounded-md">
+                    //   Continue with PayPal
+                    // </button>
+                    <input
+                      type="text"
+                      value={paypalAcout}
+                      onChange={(e) => setPaypalAcount(e.target.value)}
+                      className="mt-2 w-full border px-3 py-2 rounded-md focus:outline-none"
+                    />
                   )}
                 </div>
               </label>
@@ -209,9 +545,15 @@ export const Checkout = () => {
                   <SiGooglepay size={24} color="#4285F4" />
                   <p className="font-medium">Google Pay</p>
                   {paymentMethod === "googlepay" && (
-                    <button className="mt-2 w-full bg-black text-white py-2 rounded-md">
-                      Pay with Google Pay
-                    </button>
+                    // <button className="mt-2 w-full bg-black text-white py-2 rounded-md">
+                    //   Pay with Google Pay
+                    // </button>
+                    <input
+                      type="text"
+                      value={googlepayNumber}
+                      onChange={(e) => setGooglepayNumber(e.target.value)}
+                      className="mt-2 w-full border px-3 py-2 rounded-md focus:outline-none"
+                    />
                   )}
                 </div>
               </label>
@@ -235,8 +577,8 @@ export const Checkout = () => {
               ← Return to Cart
             </a>
             <button
-              onClick={() => navigate("/receivedOrder")}
-              // onClick={handlePlaceOrder}
+              // onClick={() => navigate("/receivedOrder")}
+              onClick={handlePlaceOrder}
               className="px-6 py-3 bg-gray-900 text-white rounded-md hover:bg-black"
             >
               Place Order
