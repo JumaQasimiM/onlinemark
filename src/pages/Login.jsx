@@ -31,7 +31,8 @@ export const Login = () => {
       formValues.password === "123"
     ) {
       localStorage.setItem("user", formValues.username);
-      navigate("/cart");
+      navigate("/products");
+      window.location.reload();
     } else {
       toast.error("usernaem or password is incorect.");
     }
