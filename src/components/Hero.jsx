@@ -2,6 +2,7 @@ import Einkaufen from "../assets/einkaufen.jpg";
 import { FaShoppingBag } from "react-icons/fa";
 import { motion } from "framer-motion";
 
+import { Link } from "react-router-dom";
 const container = {
   hidden: { opacity: 0 },
   show: {
@@ -56,22 +57,25 @@ export const Hero = () => {
           </motion.p>
 
           <motion.div variants={item} className="flex gap-4">
-            <motion.button
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 px-8 py-3 text-sm bg-amber-400 text-black font-semibold rounded-md"
-            >
-              <FaShoppingBag />
-              Shop Now
-            </motion.button>
-
-            <motion.button
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 text-sm border border-white rounded-md hover:bg-white hover:text-black transition"
-            >
-              View Deals
-            </motion.button>
+            <Link to="/products">
+              <motion.button
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-2 px-8 py-3 text-sm bg-amber-400 text-black font-semibold rounded-md"
+              >
+                <FaShoppingBag />
+                Shop Now
+              </motion.button>
+            </Link>
+            <Link to="/products">
+              <motion.button
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-3 text-sm border border-white rounded-md hover:bg-white hover:text-black transition"
+              >
+                View Deals
+              </motion.button>
+            </Link>
           </motion.div>
         </motion.div>
 

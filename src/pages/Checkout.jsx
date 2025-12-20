@@ -447,52 +447,61 @@ export const Checkout = () => {
             <div className="space-y-4">
               {/* Card */}
               <label
-                className={`border rounded-md p-4 flex gap-3 cursor-pointer ${
-                  paymentMethod === "card" ? "border-gray-400 shadow-md" : ""
+                className={`border rounded-md p-4 flex gap-3 cursor-pointer transition-all ${
+                  paymentMethod === "card"
+                    ? "border-gray-400 shadow-md"
+                    : "hover:border-gray-300"
                 }`}
               >
-                <input
-                  type="radio"
-                  name="payment"
-                  value="card"
-                  checked={paymentMethod === "card"}
-                  onChange={(e) => setPaymentMethod(e.target.value)}
-                />
-                <div className="flex-1">
-                  <FaCreditCard size={24} />
-                  <p className="font-medium">Credit / Debit Card</p>
-                  {paymentMethod === "card" && (
-                    <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <input
-                        value={cardNumber}
-                        onChange={(e) => setCardNumber(e.target.value)}
-                        placeholder="Card Number"
-                        className="border py-2 px-2 rounded "
-                      />
+                <div className="flex flex-col sm:flex-row gap-3">
+                  {/* Radio + Icon */}
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="radio"
+                      name="payment"
+                      value="card"
+                      checked={paymentMethod === "card"}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                    />
+                    <FaCreditCard size={26} />
+                  </div>
 
-                      <input
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        name="date"
-                        placeholder="MM / YY"
-                        className="border py-2 px-2 rounded "
-                      />
-                      <input
-                        value={cvc}
-                        onChange={(e) => setCVC(e.target.value)}
-                        name="CVC"
-                        placeholder="CVC"
-                        className="border py-2 px-2 rounded "
-                      />
-                      <input
-                        value={CardholderName}
-                        onChange={(e) => setCardholderName(e.target.value)}
-                        name="CardholderName"
-                        placeholder="Cardholder Name"
-                        className="col-span-2 border py-2 px-2 rounded "
-                      />
-                    </div>
-                  )}
+                  {/* Content */}
+                  <div className="flex-1">
+                    <p className="font-medium">Credit / Debit Card</p>
+
+                    {paymentMethod === "card" && (
+                      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 w-74 md:w-120">
+                        <input
+                          value={cardNumber}
+                          onChange={(e) => setCardNumber(e.target.value)}
+                          placeholder="Card Number"
+                          className="col-span-1 sm:col-span-2 border px-3 py-2 rounded-md focus:outline-none"
+                        />
+
+                        <input
+                          value={date}
+                          onChange={(e) => setDate(e.target.value)}
+                          placeholder="MM / YY"
+                          className="w-full border px-3 py-2 rounded-md focus:outline-none"
+                        />
+
+                        <input
+                          value={cvc}
+                          onChange={(e) => setCVC(e.target.value)}
+                          placeholder="CVC"
+                          className="border px-3 py-2 rounded-md focus:outline-none"
+                        />
+
+                        <input
+                          value={CardholderName}
+                          onChange={(e) => setCardholderName(e.target.value)}
+                          placeholder="Cardholder Name"
+                          className="col-span-1 sm:col-span-2 border px-3 py-2 rounded-md focus:outline-none"
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
               </label>
 
