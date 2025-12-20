@@ -2,8 +2,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaShoppingCart, FaCreditCard, FaStar, FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 
+import { useCartContext } from "../context/CartContext";
 export const PopularProductCard = ({
   id,
   title,
@@ -14,10 +14,8 @@ export const PopularProductCard = ({
 }) => {
   const [showActions, setShowActions] = useState(false);
 
-  // add to cart
-  const AddToCart = (id) => {
-    toast.success(`Product ${id} added to cart!`);
-  };
+  //use  cart context
+  const { addToCart } = useCartContext();
 
   return (
     <motion.div
@@ -109,7 +107,7 @@ export const PopularProductCard = ({
         {/* Buttons */}
         <div className="flex items-center gap-3 w-full mt-auto">
           <button
-            onClick={() => AddToCart(id)}
+            onClick={() => addToCart(id)}
             className="flex-1 flex items-center justify-center gap-2 py-1 text-sm bg-sky-700 text-white rounded font-medium hover:bg-sky-600 hover:shadow-md active:scale-95 transition"
           >
             <FaShoppingCart className="text-white/90" size={20} />
