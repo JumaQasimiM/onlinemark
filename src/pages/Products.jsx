@@ -38,7 +38,12 @@ export const Products = () => {
   if (catLoading || prodLoading) {
     return (
       <div className="flex justify-center items-center h-96">
-        <p className="text-gray-500 text-lg animate-pulse">Loading...</p>
+        <p className="text-gray-500 text-lg">
+          Loading
+          <span className="animate-ping inline-block mx-1">.</span>
+          <span className="animate-ping inline-block mx-1 delay-150">.</span>
+          <span className="animate-ping inline-block mx-1 delay-300">.</span>
+        </p>
       </div>
     );
   }

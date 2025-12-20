@@ -33,12 +33,13 @@ export const Newsletter = () => {
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
           >
-            <span className="inline-block mb-4 px-4 py-1 text-sm font-semibold tracking-widest uppercase border border-gray-300 rounded-full">
+            <span className="font-caveat inline-block mb-4 px-4 py-1 text-sm font-semibold tracking-widest uppercase border border-gray-300 rounded-full">
               Newsletter
             </span>
 
-            <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-6">
-              Weekly Style <br />
+            <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-6 font-milonga">
+              Weekly <span className="text-amber-400 font-caveat">Style</span>{" "}
+              <br />
               Delivered
             </h2>
 

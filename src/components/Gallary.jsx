@@ -33,10 +33,10 @@ export const Gallery = () => {
           viewport={{ once: true }}
           className="mb-12 text-center"
         >
-          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900">
+          <h2 className="font-caveat text-4xl md:text-5xl font-extrabold text-gray-900">
             Trending Styles
           </h2>
-          <p className="text-gray-600 mt-3 max-w-xl mx-auto">
+          <p className="text-gray-600 mt-3 max-w-xl mx-auto font-milonga">
             Explore our latest collection featuring premium quality and trendy
             designs.
           </p>

@@ -1,5 +1,4 @@
 import { FaUsers, FaLightbulb, FaGlobe } from "react-icons/fa";
-
 export const About = () => {
   return (
     <section className="min-h-screen bg-white py-24 px-4">
@@ -7,10 +6,10 @@ export const About = () => {
         {/* Hero Header */}
         <header className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-24">
           <div>
-            <h1 className="text-5xl font-semibold text-gray-900 mb-6">
+            <h1 className="font-milonga text-5xl font-semibold text-gray-900 mb-6">
               About Us
             </h1>
-            <p className="text-lg text-gray-500 max-w-xl">
+            <p className="font-caveat text-3xl font-bold text-gray-500 max-w-xl">
               OnlineMarkt is dedicated to providing the best online shopping
               experience. Our mission is to bring quality products to your
               doorstep with ease and trust.
@@ -22,7 +21,7 @@ export const About = () => {
               alt="About Us"
               className="w-full h-80 object-cover rounded-xl"
             />
-          </div> */}
+          </div> */}{" "}
         </header>
 
         {/* Core Values / Features */}

@@ -34,22 +34,22 @@ export const Hero = () => {
         >
           <motion.span
             variants={item}
-            className="inline-block mb-5 px-5 py-1 border border-white/30 rounded-full text-sm tracking-widest uppercase"
+            className="font-caveat inline-block mb-5 px-5 py-1 border border-white/30 rounded-full text-sm tracking-widest uppercase"
           >
             New Collection 2025
           </motion.span>
 
           <motion.h1
             variants={item}
-            className="text-4xl md:text-6xl font-extrabold leading-tight mb-6"
+            className="font-milonga text-4xl md:text-6xl font-extrabold leading-tight mb-6"
           >
             Shopping That <br />
-            Feels <span className="text-amber-400">Effortless</span>
+            Feels <span className="text-amber-400 font-caveat">Effortless</span>
           </motion.h1>
 
           <motion.p
             variants={item}
-            className="text-gray-300 text-lg mb-10 max-w-lg"
+            className="text-gray-300 text-lg mb-10 max-w-lg font-roboto"
           >
             Premium products, fast delivery, and secure payments — everything
             you need for a better shopping experience.

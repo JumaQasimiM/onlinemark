@@ -2,9 +2,12 @@ import { useNavigate } from "react-router-dom";
 import T from "../assets/t1.png";
 import { FaTrash } from "react-icons/fa";
 import { useState } from "react";
-
+import { useCartContext } from "../context/CartContext";
 export const Cart = () => {
   const [qauntity, setQauntity] = useState(0);
+  // use cart context
+  const { removeCart } = useCartContext();
+
   const navigate = useNavigate();
   // add and sub
   const add = () => {
@@ -78,6 +81,7 @@ export const Cart = () => {
                   <td className="p-4 font-semibold whitespace-nowrap">$40</td>
                   <td className="p-4 font-semibold whitespace-nowrap">
                     <FaTrash
+                      onClick={() => removeCart(2)}
                       size={20}
                       className="text-red-500 cursor-pointer hover:-translate-y-1 transition"
                     />
