@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
-
-// Icons
 import {
   FaFacebookF,
   FaTwitter,
@@ -21,30 +19,26 @@ const navbars = [
   { name: "About", url: "/about" },
   { name: "Contact", url: "/contact" },
 ];
+
 export const Footer = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
-  // Newsletter subscription handler
   const Subscribe = () => {
     const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
     if (!email || email.length < 6) {
       setError("Enter a valid email!");
       return;
     }
-
     if (!emailReg.test(email)) {
       setError("Enter a valid email format!");
       return;
     }
-
     setError("");
     setEmail("");
     toast.success("Thank you for subscribing!");
   };
 
-  // Payment icons data
   const paymentIcons = [
     { icon: FaCcVisa, bg: "bg-sky-500" },
     { icon: FaCcMastercard, bg: "bg-amber-600" },
@@ -52,19 +46,23 @@ export const Footer = () => {
     { icon: SiGooglepay, bg: "bg-gray-800" },
   ];
 
-  // Social icons
-  const socialIcons = [FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn];
+  const socialIcons = [
+    { icon: FaFacebookF, url: "#" },
+    { icon: FaTwitter, url: "#" },
+    { icon: FaInstagram, url: "#" },
+    { icon: FaLinkedinIn, url: "#" },
+  ];
 
   return (
-    <footer className="bg-gray-100 text-slate-900 relative z-10">
+    <footer className="bg-gradient-to-r from-gray-50 to-gray-200 text-slate-900">
       {/* Top Section */}
       <div className="max-w-7xl mx-auto px-6 md:px-16 py-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         {/* About */}
         <div className="space-y-4">
           <h3 className="text-xl font-bold text-slate-950">About Us</h3>
-          <p className="text-gray-800 text-sm">
-            OnlineMartkt is your go-to destination for high-quality, stylish
-            apparel combining comfort and modern design.
+          <p className="text-gray-700 text-sm">
+            OnlineMartkt offers high-quality, stylish apparel combining comfort
+            and modern design.
           </p>
           <div className="flex items-center gap-3">
             {paymentIcons.map(({ icon: Icon, bg }, idx) => (
@@ -83,15 +81,17 @@ export const Footer = () => {
         {/* Quick Links */}
         <div className="space-y-4">
           <h3 className="text-xl font-bold text-slate-950">Quick Links</h3>
-          <ul className="space-y-2 text-gray-800">
+          <ul className="space-y-2 text-gray-700">
             {navbars.map((link, idx) => (
               <li key={idx}>
-                <Link
-                  to={link.url}
-                  className="hover:text-sky-500 transition cursor-pointer"
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  className="cursor-pointer"
                 >
-                  {link.name}
-                </Link>
+                  <Link to={link.url} className="hover:text-sky-500 transition">
+                    {link.name}
+                  </Link>
+                </motion.div>
               </li>
             ))}
           </ul>
@@ -100,19 +100,20 @@ export const Footer = () => {
         {/* Customer Service */}
         <div className="space-y-4">
           <h3 className="text-xl font-bold text-slate-950">Customer Service</h3>
-          <ul className="space-y-2 text-gray-800">
+          <ul className="space-y-2 text-gray-700">
             {[
               "FAQ",
               "Shipping & Returns",
               "Privacy Policy",
               "Terms & Conditions",
             ].map((item, idx) => (
-              <li
+              <motion.li
                 key={idx}
-                className="hover:text-sky-500 transition cursor-pointer"
+                whileHover={{ scale: 1.05 }}
+                className="cursor-pointer hover:text-sky-500 transition"
               >
                 {item}
-              </li>
+              </motion.li>
             ))}
           </ul>
         </div>
@@ -120,19 +121,19 @@ export const Footer = () => {
         {/* Newsletter */}
         <div className="space-y-4">
           <h3 className="text-xl font-bold text-slate-950">Newsletter</h3>
-          <p className="text-gray-800 text-sm">
-            Subscribe to receive updates and exclusive deals.
+          <p className="text-gray-700 text-sm">
+            Subscribe for updates & exclusive deals.
           </p>
-
           {error && <p className="text-red-600 font-semibold">{error}</p>}
-
           <div className="flex gap-2">
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               type="email"
               placeholder="Enter your email"
-              className="w-full px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-sky-500 bg-gray-200 text-gray-900"
+              className={`w-full px-3 py-2 rounded focus:outline-none focus:ring-2 ${
+                error ? "border-red-500" : "border-gray-300"
+              } bg-gray-200`}
             />
             <button
               onClick={Subscribe}
@@ -145,24 +146,25 @@ export const Footer = () => {
       </div>
 
       {/* Bottom Section */}
-      <div className="border-t border-gray-800 py-6 flex flex-col sm:flex-row justify-between items-center px-6 md:px-16 gap-4">
-        <p className="text-gray-800 text-sm">
+      <div className="border-t border-gray-300 py-6 flex flex-col sm:flex-row justify-between items-center gap-4 px-6 md:px-16">
+        <p className="text-gray-700 text-sm">
           &copy; 2025 OnlineMartkt. All rights reserved.
         </p>
-
-        <p className="text-gray-800 text-sm px-2">
+        <p className="text-gray-700 text-sm">
           Designed ❤️ by{" "}
           <span className="font-semibold text-sky-500">
             Mohammad Juma Qasimi
           </span>
         </p>
-
         <div className="flex gap-4">
-          {socialIcons.map((Icon, idx) => (
+          {socialIcons.map(({ icon: Icon, url }, idx) => (
             <motion.a
               key={idx}
-              href="#"
-              className="text-gray-800 hover:text-sky-500 transition transform hover:scale-110"
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.2 }}
+              className="text-gray-700 hover:text-sky-500 transition"
             >
               <Icon />
             </motion.a>

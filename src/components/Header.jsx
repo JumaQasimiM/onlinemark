@@ -4,55 +4,62 @@ import { FaRegUser, FaSignOutAlt } from "react-icons/fa";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { Link, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useCartContext } from "../context/CartContext";
+
 export const Header = () => {
   const [isScroll, setIsScroll] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  // get user islogedin or not
   const [isUser, setIsUser] = useState(null);
-  useEffect(() => {
-    const handleStorage = () => {
-      setIsUser(localStorage.getItem("user"));
-    };
-    window.addEventListener("storage", handleStorage);
-    handleStorage();
-    return () => window.removeEventListener("storage", handleStorage);
-  }, []);
 
-  const navItem = [
+  const { getCart } = useCartContext();
+  const cartItems = getCart(); // fetch cart items
+  const cartCount = cartItems.length;
+
+  const navItems = [
     { name: "Home", path: "/" },
     { name: "Shop", path: "/products" },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
   ];
 
+  // Detect scroll
   useEffect(() => {
     const handleScroll = () => setIsScroll(window.scrollY > 15);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // logout
+  // Detect user login status
+  useEffect(() => {
+    const handleStorage = () => setIsUser(localStorage.getItem("user"));
+    window.addEventListener("storage", handleStorage);
+    handleStorage(); // initial check
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem("user");
-    window.location.reload();
+    setIsUser(null);
   };
+
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300
-        ${isScroll ? "bg-gray-200 shadow-lg py-4" : "bg-gray-50 py-6"}
-      `}
+        ${isScroll ? "bg-gray-200 shadow-lg py-4" : "bg-gray-50 py-6"}`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-6">
         {/* Logo */}
-        <div className="font-[Roboto] text-2xl md:text-3xl font-bold tracking-wide text-sky-600 hover:text-sky-700 transition duration-300">
-          OnlineMartkt
-        </div>
+        <Link
+          to="/"
+          className="font-caveat text-2xl md:text-3xl font-extrabold tracking-wide text-sky-600 hover:text-sky-700 transition duration-300"
+        >
+          OnlineMarket
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex">
           <ul className="flex items-center gap-10 font-medium">
-            {navItem.map((item, index) => (
+            {navItems.map((item, index) => (
               <NavLink
                 key={index}
                 to={item.path}
@@ -65,8 +72,7 @@ export const Header = () => {
                 }
               >
                 <span
-                  className={`absolute left-1/2 -translate-x-1/2 -bottom-1 h-0.5 bg-sky-300 transition-all duration-300
-      ${"w-0 group-hover:w-full"}`}
+                  className={`absolute left-1/2 -translate-x-1/2 -bottom-1 h-0.5 bg-sky-300 transition-all duration-300 w-0 group-hover:w-full`}
                 />
                 {item.name}
               </NavLink>
@@ -76,16 +82,20 @@ export const Header = () => {
 
         {/* Right Actions */}
         <div className="flex items-center gap-6 font-medium mx-3">
+          {/* Cart Icon */}
           <Link
             to="/cart"
             className="relative text-black hover:text-sky-600 transition duration-300 cursor-pointer"
           >
             <MdOutlineShoppingCart size={28} />
-            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
-              1
-            </span>
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+                {cartCount}
+              </span>
+            )}
           </Link>
 
+          {/* User */}
           {!isUser && (
             <Link
               to="/login"
@@ -112,24 +122,24 @@ export const Header = () => {
           </button>
         </div>
       </div>
-
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          whileHover={{ scale: 1.1 }}
-          className="md:hidden bg-slate-300 shadow-lg w-full absolute top-full left-0 py-5 transition-all duration-300"
+          exit={{ opacity: 0, y: -20 }}
+          className="md:hidden w-full absolute top-full left-0 py-6 bg-sky-500 shadow-2xl rounded-b-xl transition-all duration-300 z-50"
         >
-          <ul className="flex flex-col items-center gap-4 text-black font-medium">
-            {navItem.map((item, index) => (
+          <ul className="flex flex-col items-center gap-6 text-white font-semibold">
+            {navItems.map((item, index) => (
               <NavLink
                 key={index}
                 to={item.path}
-                className="cursor-pointer hover:text-yellow-300 transition"
-                onClick={() => setIsMobileMenuOpen(false)} // close menu
+                className="cursor-pointer relative px-4 py-2 rounded-lg hover:bg-white/20 transition-all duration-300"
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.name}
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-300 transition-all duration-300 group-hover:w-full"></span>
               </NavLink>
             ))}
           </ul>

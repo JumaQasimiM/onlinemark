@@ -1,138 +1,134 @@
+import { motion } from "framer-motion";
 import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
 
-import image from "../assets/t1.png";
 export const Contact = () => {
+  // handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (e.target === required) {
-      ("*:text-red-500");
-    }
+    toast.info("Message send successfully.");
+
+    // reset the from after sending
+    e.target.reset();
   };
+  // create custom label
   const Label = ({ text, required }) => (
     <label className="block text-sm text-gray-600 mb-2">
       {text}
-      {required && (
-        <span className="text-red-500 ml-1 group-border:text-red-400">*</span>
-      )}
+      {required && <span className="text-red-500 ml-1">*</span>}
     </label>
   );
+  // ContactInfo
+  const contactInfo = [
+    {
+      icon: <FaEnvelope />,
+      title: "Email",
+      info: "support@onlinemarkt.com",
+    },
+    { icon: <FaPhoneAlt />, title: "Phone", info: "+49 446 000 000" },
+    {
+      icon: <FaMapMarkerAlt />,
+      title: "Office",
+      info: "OnlineMarkt GmbH\nAbcStraße 32\nStuttgart 74000, Germany",
+    },
+  ];
 
   return (
-    <section className="min-h-screen bg-white py-24 px-4">
+    <section className="min-h-screen bg-gray-50 py-24 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <header className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-24">
-          {/* Text */}
-          <div>
-            <h1 className="text-5xl font-semibold text-gray-900 mb-6">
-              Contact
-            </h1>
-            <p className="text-lg text-gray-500 max-w-xl">
-              Get in touch with our team. We usually respond within 24 hours.
-            </p>
-          </div>
+        <motion.header
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-20"
+        >
+          <h1 className="text-5xl font-extrabold text-gray-900 mb-4 font-milonga">
+            Contact Us
+          </h1>
+          <p className="text-gray-600 text-lg max-w-xl mx-auto font-milonga">
+            Have questions or feedback? Reach out to our team, and we’ll get
+            back to you as soon as possible.
+          </p>
+        </motion.header>
 
-          {/* Image */}
-          {/* <div className="hidden md:block">
-            <img
-              src={image}
-              alt="Contact"
-              className="w-full h-112 object-cover rounded-xl"
-            />
-          </div> */}
-        </header>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
-          {/* Left: Info */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+          {/* Left: Contact Info */}
           <div className="space-y-10">
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-lg bg-sky-100 text-sky-600">
-                <FaEnvelope size={18} />
-              </div>
-              <div>
-                <h3 className="text-sm uppercase tracking-wide text-gray-400 mb-1">
-                  Email
-                </h3>
-                <p className="text-lg text-gray-900">support@onlinemarkt.com</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-lg bg-sky-100 text-sky-600">
-                <FaPhoneAlt size={18} />
-              </div>
-              <div>
-                <h3 className="text-sm uppercase tracking-wide text-gray-400 mb-1">
-                  Phone
-                </h3>
-                <p className="text-lg text-gray-900">+49 123 456 789</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-lg bg-sky-100 text-sky-600">
-                <FaMapMarkerAlt size={18} />
-              </div>
-              <div>
-                <h3 className="text-sm uppercase tracking-wide text-gray-400 mb-1">
-                  Office
-                </h3>
-                <p className="text-lg text-gray-900 leading-relaxed">
-                  OnlineMarkt GmbH <br />
-                  AbcStraße 32. <br />
-                  Stuttgart 74000, Germany
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Right: Form */}
-          <div>
-            <form className="space-y-8" onSubmit={handleSubmit}>
-              <div>
-                <Label text="Name" required />
-                <input
-                  required
-                  name="name"
-                  type="text"
-                  className="group w-full border-b border-gray-300 py-3 text-gray-900
-                             focus:outline-none focus:border-sky-600"
-                />
-              </div>
-
-              <div>
-                <Label text="Email" required />
-                <input
-                  required
-                  name="email"
-                  type="email"
-                  className="w-full border-b border-gray-300 py-3 text-gray-900
-                             focus:outline-none focus:border-sky-600"
-                />
-              </div>
-
-              <div>
-                <Label text="Message" required />
-                <textarea
-                  required
-                  name="message"
-                  rows="4"
-                  className="w-full border-b border-gray-300 py-3 text-gray-900
-                             focus:outline-none focus:border-sky-600 resize-none"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="mt-8 inline-flex items-center justify-center
-                           px-10 py-3 text-sm font-medium
-                           bg-sky-600 text-white
-                           hover:bg-sky-700 transition"
+            {contactInfo.map((item, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="flex items-start gap-4 bg-white p-6 rounded-2xl shadow hover:shadow-lg transition"
               >
-                Send Message
-              </button>
-            </form>
+                <div className="p-4 rounded-lg bg-sky-100 text-sky-600 text-xl">
+                  {item.icon}
+                </div>
+                <div>
+                  <h3 className="text-sm uppercase tracking-wide text-gray-400 mb-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-900 whitespace-pre-line">
+                    {item.info}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
           </div>
+
+          {/* Right: Contact Form */}
+          <motion.form
+            onSubmit={handleSubmit}
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="bg-white p-10 rounded-3xl shadow-lg space-y-6"
+          >
+            <div>
+              <Label text="Name" required />
+              <input
+                required
+                name="name"
+                type="text"
+                placeholder="Your Name"
+                className="w-full border-b border-gray-300 py-3 text-gray-900 focus:outline-none focus:border-sky-600 transition"
+              />
+            </div>
+
+            <div>
+              <Label text="Email" required />
+              <input
+                required
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                className="w-full border-b border-gray-300 py-3 text-gray-900 focus:outline-none focus:border-sky-600 transition"
+              />
+            </div>
+
+            <div>
+              <Label text="Message" required />
+              <textarea
+                required
+                name="message"
+                rows="5"
+                placeholder="Your message..."
+                className="w-full border-b border-gray-300 py-3 text-gray-900 focus:outline-none focus:border-sky-600 resize-none transition"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-3 text-white bg-sky-600 rounded-xl font-semibold hover:bg-sky-700 transition"
+            >
+              Send Message
+            </button>
+          </motion.form>
         </div>
       </div>
     </section>

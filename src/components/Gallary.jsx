@@ -4,85 +4,126 @@ import { FaStar, FaShoppingCart } from "react-icons/fa";
 import img1 from "../assets/blueShirt.jpg";
 import img2 from "../assets/grayTshirt.jpg";
 
+const products = [
+  {
+    id: 1,
+    name: "Premium Blue Shirt",
+    price: "$79.00",
+    image: img1,
+    badge: "Trending",
+  },
+  {
+    id: 2,
+    name: "Classic Gray T-Shirt",
+    price: "$49.00",
+    image: img2,
+    badge: "Best Seller",
+  },
+  {
+    id: 3,
+    name: "Premium Blue Shirt",
+    price: "$79.00",
+    image: img1,
+  },
+  {
+    id: 4,
+    name: "Classic Gray T-Shirt",
+    price: "$49.00",
+    image: img2,
+  },
+];
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12 } },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 24 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+};
+
 export const Gallery = () => {
-  const images = [img1, img2, img1, img2];
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-
-  const container = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.15 } },
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 50, scale: 0.95 },
-    show: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.7, ease: "easeOut" },
-    },
-  };
-
   return (
-    <section className="w-full bg-gray-50 py-24">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 overflow-hidden">
+    <section className="w-full bg-white py-15">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-12 text-center"
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-2xl mx-auto mb-16"
         >
           <h2 className="font-caveat text-4xl md:text-5xl font-extrabold text-gray-900">
             Trending Styles
           </h2>
-          <p className="text-gray-600 mt-3 max-w-xl mx-auto font-milonga">
-            Explore our latest collection featuring premium quality and trendy
-            designs.
+          <p className="text-gray-500 mt-4 font-milonga">
+            Discover our most loved pieces, crafted with premium materials and
+            modern design.
           </p>
         </motion.div>
 
+        {/* Grid */}
         <motion.div
           variants={container}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="flex flex-wrap justify-center -space-x-10 md:-space-x-16"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10"
         >
-          {images.map((img, i) => (
+          {products.map((product) => (
             <motion.div
-              key={i}
+              key={product.id}
               variants={item}
-              onMouseEnter={() => setHoveredIndex(i)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              className="relative w-72 h-96 md:w-80 md:h-[28rem] rounded-3xl overflow-hidden shadow-2xl bg-white transform hover:-translate-y-2 hover:scale-105 transition cursor-pointer"
-              style={{
-                zIndex: hoveredIndex === i ? 100 : images.length - i,
-              }}
+              whileHover={{ y: -6 }}
+              className="group bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 hover:shadow-xl transition-all"
             >
-              <img
-                src={img}
-                alt={`Product ${i + 1}`}
-                className="w-full h-full object-cover rounded-3xl"
-              />
+              {/* Image */}
+              <div className="relative overflow-hidden">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-[22rem] object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
 
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{
-                  delay: 0.3 + i * 0.1,
-                  type: "spring",
-                  stiffness: 200,
-                }}
-                className="absolute top-4 left-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-lg text-sm flex items-center gap-1 shadow-md"
-              >
-                <FaStar className="text-white" /> Hot
-              </motion.div>
+                {/* Badge */}
+                {product.badge && (
+                  <span className="absolute top-4 left-4 bg-black/80 text-white text-xs px-3 py-1 rounded-full tracking-wide">
+                    {product.badge}
+                  </span>
+                )}
 
-              <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition flex items-end p-4 rounded-3xl">
-                <button className="w-full bg-white text-gray-900 py-2 rounded-md font-semibold flex items-center justify-center gap-2 hover:bg-gray-100 transition">
-                  <FaShoppingCart /> Add to Cart
-                </button>
+                {/* Overlay CTA */}
+                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+                  <button className="w-full bg-white text-gray-900 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 hover:bg-gray-100 transition">
+                    <FaShoppingCart />
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+
+              {/* Info */}
+              <div className="p-5">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  {product.name}
+                </h3>
+
+                <div className="flex items-center justify-between mt-2">
+                  <span className="text-amber-500 font-bold">
+                    {product.price}
+                  </span>
+
+                  <div className="flex items-center gap-1 text-amber-400 text-sm">
+                    <FaStar />
+                    <span className="text-gray-600">4.8</span>
+                  </div>
+                </div>
               </div>
             </motion.div>
           ))}

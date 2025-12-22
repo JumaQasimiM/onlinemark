@@ -46,8 +46,10 @@ export const RecivedOrder = () => {
       <div className="max-w-7xl mx-auto bg-white shadow-2xl rounded-2xl p-10 space-y-12">
         {/* ===== Header ===== */}
         <div className="text-center space-y-4">
-          <FaCheckCircle className="text-green-600 text-8xl mx-auto animate-pulse" />
-          <h1 className="text-5xl font-bold text-green-600">Order Received</h1>
+          <FaCheckCircle className="text-green-600 text-4xl md:text-8xl mx-auto animate-pulse" />
+          <h1 className="text-2xl md:text-5xl font-bold text-green-600">
+            Order Received
+          </h1>
           <p className="text-gray-600 text-lg">
             Thank you! Your order has been successfully placed.
           </p>
@@ -55,7 +57,7 @@ export const RecivedOrder = () => {
 
         {/* ===== Order Summary ===== */}
         <div className="border rounded-xl p-6 bg-gray-50 space-y-4">
-          <h2 className="text-2xl font-semibold flex items-center gap-2">
+          <h2 className="text-md md:text-2xl font-semibold flex items-center gap-2">
             <MdPayment /> Order Summary
           </h2>
 
@@ -96,7 +98,7 @@ export const RecivedOrder = () => {
 
         {/* ===== Items & Total ===== */}
         <div className="border rounded-xl p-6 space-y-4">
-          <h2 className="text-2xl font-semibold flex items-center gap-2">
+          <h2 className="text-md md:text-2xl font-semibold flex items-center gap-2">
             <FaBoxOpen /> Items Ordered
           </h2>
           <div className="space-y-3">

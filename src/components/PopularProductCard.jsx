@@ -108,7 +108,7 @@ export const PopularProductCard = ({
         <div className="flex items-center gap-3 w-full mt-auto">
           <button
             onClick={() => addToCart(id)}
-            className="flex-1 flex items-center justify-center gap-2 py-1 text-sm bg-sky-700 text-white rounded font-medium hover:bg-sky-600 hover:shadow-md active:scale-95 transition"
+            className="flex-1 flex items-center justify-center gap-2 py-1 text-sm bg-sky-500 text-white rounded font-medium hover:bg-sky-600 hover:shadow-md active:scale-95 transition"
           >
             <FaShoppingCart className="text-white/90" size={20} />
           </button>

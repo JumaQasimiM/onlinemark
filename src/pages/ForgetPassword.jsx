@@ -135,7 +135,7 @@ export const ForgetPassword = () => {
                 </button>
                 <Link
                   to="/login"
-                  className="block text-center text-sm text-gray-500 hover:text-sky-600 transition"
+                  className="block text-center text-sm text-gray-500 hover:text-sky-500 transition"
                 >
                   Remembered your password? Login
                 </Link>

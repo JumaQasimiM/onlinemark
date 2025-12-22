@@ -21,6 +21,8 @@ export const Checkout = () => {
   const totalItem = cartItems.length;
   // get total price
   const totalPrice = localStorage.getItem("totalPrice");
+  // pickup
+  const [selectedPickup, setSelectedPickup] = useState("");
 
   // email
   const [email, setEmail] = useState("");
@@ -236,6 +238,7 @@ export const Checkout = () => {
   };
 
   const handlePlaceOrder = () => {
+    // validation only for shping
     const isFormValid =
       !emailError &&
       !firstnameError &&
@@ -253,24 +256,28 @@ export const Checkout = () => {
       city &&
       country;
 
+    // select the shping method
     if (showShip && !isFormValid) {
       toast.error("Please fill all required fields correctly");
       return;
     }
+    // select the pickup method
+    if (showPickup && !selectedPickup) {
+      toast.error("Please select a pickup location");
+      return;
+    }
+    // in pickup method check the email(have to email)
+    if (!email || emailError) {
+      toast.error("Please enter a valid email for pickup");
+      return;
+    }
 
+    // check payment method
     let isValidPayment = false;
 
-    if (paymentMethod === "card") {
-      isValidPayment = handleCard();
-    }
-
-    if (paymentMethod === "paypal") {
-      isValidPayment = handlePaypal();
-    }
-
-    if (paymentMethod === "googlepay") {
-      isValidPayment = handleGooglepay();
-    }
+    if (paymentMethod === "card") isValidPayment = handleCard(); // return boolean
+    if (paymentMethod === "paypal") isValidPayment = handlePaypal(); // return boolean
+    if (paymentMethod === "googlepay") isValidPayment = handleGooglepay(); // return boolean
 
     if (!isValidPayment) return;
 
@@ -278,10 +285,11 @@ export const Checkout = () => {
 
     const Address = showShip
       ? { firstname, lastname, email, street, homeNo, zip, city, country }
-      : { pickup: true };
+      : { pickup: selectedPickup };
 
     const orderDate = new Date();
     const orderDetail = { paymentMethod, email, orderDate };
+
     localStorage.setItem("orderDetail", JSON.stringify(orderDetail));
     localStorage.setItem("address", JSON.stringify(Address));
     navigate("/receivedOrder");
@@ -349,12 +357,28 @@ export const Checkout = () => {
           {showPickup && (
             <div className="mt-4 space-y-2 border p-3 rounded">
               <label className="flex items-center gap-2 p-2 cursor-pointer">
-                <input type="radio" name="pickup" />
+                <input
+                  type="radio"
+                  name="pickup"
+                  value="Rathaus 13, Heilbronn 74546, Germany"
+                  checked={
+                    selectedPickup === "Rathaus 13, Heilbronn 74546, Germany"
+                  }
+                  onChange={(e) => setSelectedPickup(e.target.value)}
+                />
                 Rathaus 13, Heilbronn 74546, Germany
               </label>
               <label className="flex items-center gap-2 p-2 cursor-pointer">
-                <input type="radio" name="pickup" /> Rathaus 13, 74546 Öhingen,
-                Germany
+                <input
+                  type="radio"
+                  name="pickup"
+                  value="Rathaus 13, 74546 Öhingen, Germany"
+                  checked={
+                    selectedPickup === "Rathaus 13, 74546 Öhingen, Germany"
+                  }
+                  onChange={(e) => setSelectedPickup(e.target.value)}
+                />
+                Rathaus 13, 74546 Öhingen, Germany
               </label>
             </div>
           )}

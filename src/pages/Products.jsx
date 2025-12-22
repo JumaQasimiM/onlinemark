@@ -5,6 +5,9 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const Products = () => {
+  const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
+
   // Categories
   const {
     data: category = [],
@@ -13,9 +16,6 @@ export const Products = () => {
   } = useProductCategories();
   // Normalize categories first
   const categories = [{ slug: "All", name: "All" }, ...category];
-
-  const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
 
   // Products
   const {

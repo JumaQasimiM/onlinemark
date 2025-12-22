@@ -177,7 +177,7 @@ export const Register = () => {
 
               <button
                 type="submit"
-                className="w-full mt-6 py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 active:scale-[0.98] transition"
+                className="w-full mt-6 py-3 bg-sky-600 text-white font-semibold rounded-md hover:bg-blue-700 active:scale-[0.98] transition"
               >
                 Register
               </button>

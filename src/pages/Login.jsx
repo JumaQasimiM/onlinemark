@@ -1,37 +1,48 @@
 import { useState } from "react";
 import loginImg from "../assets/einkaufen.jpg";
-import { validation } from "../apis/utility/validation";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { validation } from "../utility/validation";
 
 export const Login = () => {
   const [error, setError] = useState({
     username: "",
     password: "",
   });
+
+  // for navigate to products page after successfullly login
   const navigate = useNavigate();
+
   const loginHandle = (e) => {
     e.preventDefault();
+    // create formdata
     const formDate = new FormData(e.target);
+
+    // get form data value for check and validation
     const formValues = {
       username: formDate.get("username"),
       password: formDate.get("password"),
     };
-    // console.log(formValues);
-    // validation
+
+    // validate username and password
     const errors = validation(formValues);
     setError(errors);
 
     // stop submit if any error exists
     if (errors.username || errors.password) return;
 
-    // login logic here
+    // ============login logic here=======
+    // get data from db but i get the data from localStorage
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
     if (
-      formValues.username === "juma.qasimi" &&
-      formValues.password === "123"
+      formValues.username === user.email &&
+      formValues.password === user.password
     ) {
       localStorage.setItem("user", formValues.username);
-      navigate("/products");
+      // redirect the user into dashbord or profeil ---
+      navigate("/products"); // just for practic
       window.location.reload();
     } else {
       toast.error("usernaem or password is incorect.");
@@ -41,7 +52,7 @@ export const Login = () => {
   return (
     <section className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
       <div className="w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden md:grid md:grid-cols-2">
-        {/* Image Section */}
+        {/* Image Section just how in desktop and hide in mobile */}
         <div className="relative hidden md:block">
           <img
             src={loginImg}
@@ -60,8 +71,8 @@ export const Login = () => {
         {/* Form Section */}
         <div className="relative flex items-center justify-center p-8 md:p-12 overflow-hidden">
           {/* Decorative Elements */}
-          <div className="absolute w-32 h-32 rounded-full -bottom-20 -right-20 bg-blue-500/60" />
-          <div className="absolute -top-22 -left-16 bg-blue-600/60 w-35 h-35 rounded-full animate-pig" />
+          <div className="absolute w-32 h-32 rounded-full -bottom-20 -right-20 bg-sky-600/60" />
+          <div className="absolute -top-22 -left-16 bg-sky-600/60 w-35 h-35 rounded-full animate-pig" />
 
           <div className="w-full max-w-md relative z-10">
             {/* Header */}
@@ -84,7 +95,6 @@ export const Login = () => {
                 </label>
                 <input
                   name="username"
-                  id="username"
                   type="text"
                   placeholder="juma.qasimi"
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
@@ -102,7 +112,6 @@ export const Login = () => {
                 </label>
                 <input
                   name="password"
-                  id="password"
                   type="password"
                   placeholder="••••••••"
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
@@ -112,18 +121,18 @@ export const Login = () => {
 
               {/* Forgot Password */}
               <div className="flex justify-end">
-                <button
-                  type="button"
+                <Link
+                  to="/forgetpassword"
                   className="text-sm text-blue-600 hover:text-blue-800 transition"
                 >
                   Forgot password?
-                </button>
+                </Link>
               </div>
 
               {/* Submit */}
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white py-3 rounded-md font-semibold hover:bg-blue-700 active:scale-[0.98] transition"
+                className="w-full bg-sky-600 text-white py-3 rounded-md font-semibold hover:bg-blue-700 active:scale-[0.98] transition"
               >
                 Sign In
               </button>
@@ -132,9 +141,11 @@ export const Login = () => {
             {/* Footer */}
             <p className="text-center text-sm text-gray-600 mt-8">
               Don’t have an account?{" "}
-              <span className="text-blue-600 font-semibold cursor-pointer hover:underline">
-                Sign up
-              </span>
+              <Link to="/register">
+                <span className="text-sky-500 font-semibold cursor-pointer hover:underline">
+                  Sign up
+                </span>
+              </Link>
             </p>
           </div>
         </div>

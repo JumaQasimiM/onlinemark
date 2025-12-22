@@ -30,7 +30,7 @@ export const Home = () => {
       <section className="max-w-7xl mx-auto my-16 px-4 md:px-8">
         <motion.h2
           {...fadeInUp}
-          className="text-xl md:text-2xl font-extrabold text-gray-900 mb-8 border-l-4 border-sky-500 pl-4 flex items-center gap-3"
+          className="font-caveat text-2xl md:text-4xl font-extrabold text-gray-900 mb-8 border-l-4 border-sky-500 pl-4 flex items-center gap-3"
         >
           New Arrival Products
         </motion.h2>
@@ -61,7 +61,7 @@ export const Home = () => {
       <section className="max-w-7xl mx-auto my-20 px-4 md:px-8">
         <motion.h2
           {...fadeInUp}
-          className="text-xl md:text-2xl font-extrabold text-gray-900 border-l-4 border-sky-500 pl-4 my-4"
+          className="font-caveat text-2xl md:text-4xl  font-extrabold text-gray-900 border-l-4 border-sky-500 pl-4 my-4"
         >
           Popular Products
         </motion.h2>

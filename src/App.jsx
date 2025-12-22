@@ -16,6 +16,8 @@ import { Contact } from "./pages/Contact";
 import { Checkout } from "./pages/Checkout";
 import { RecivedOrder } from "./pages/RecivedOrder";
 import { Login } from "./pages/Login";
+import { Register } from "./pages/Register";
+import { ForgetPassword } from "./pages/ForgetPassword";
 
 function App() {
   return (
@@ -50,6 +52,8 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/receivedOrder" element={<RecivedOrder />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgetpassword" element={<ForgetPassword />} />
         </Routes>
 
         <Footer />
