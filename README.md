@@ -162,15 +162,23 @@ import read5 from "../assets/images/read5.png";
 
 ### Product Gallery
 
+### Product Gallery
+
+<img src="src/assets/images/read1.png" alt="Product 1" width="230" />
+<img src="src/assets/images/read2.png" alt="Product 2" width="230" />
+<img src="src/assets/images/read3.png" alt="Product 3" width="230" />
+<img src="src/assets/images/read4.png" alt="Product 4" width="230" />
+<img src="src/assets/images/read5.png" alt="Product 5" width="230" />
+
 <table>
   <tr>
-    <td><img src="src/assets/images/read1.png" alt="Product 1" width="200" /></td>
-    <td><img src="src/assets/images/read2.png" alt="Product 2" width="200" /></td>
-    <td><img src="src/assets/images/read3.png" alt="Product 3" width="200" /></td>
+    <td><img src="./src/assets/read1.png" alt="Product 1" width="200" /></td>
+    <td><img src="src/assets/read2.png" alt="Product 2" width="200" /></td>
+    <td><img src="src/assets/read3.png" alt="Product 3" width="200" /></td>
   </tr>
   <tr>
-    <td><img src="src/assets/images/read4.png" alt="Product 4" width="200" /></td>
-    <td><img src="src/assets/images/read5.png" alt="Product 5" width="200" /></td>
+    <td><img src="src/assets/read4.png" alt="Product 4" width="200" /></td>
+    <td><img src="src/assets/read5.png" alt="Product 5" width="200" /></td>
   </tr>
 </table>
 
