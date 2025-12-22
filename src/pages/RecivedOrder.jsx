@@ -1,15 +1,27 @@
-import React from "react";
 import { MdEmail, MdPayment, MdLocationOn, MdDateRange } from "react-icons/md";
 import { FaCheckCircle, FaBoxOpen, FaCreditCard } from "react-icons/fa";
 import { SiPaypal, SiGooglepay } from "react-icons/si";
-// import Barcode from "react-barcode";
 import { QRCode } from "react-qr-code";
+// import cart context
+import { useCartContext } from "../context/CartContext";
 
 export const RecivedOrder = () => {
+  const { getCart } = useCartContext();
+  const cartItems = getCart();
+  // fetch totla cart items
+  const totalItem = cartItems.length;
+
+  // get total price
+  const price = Number(localStorage.getItem("totalPrice")) || 0;
+  let shipping = price > 100 ? 3.5 : price > 60 ? 4 : price < 60 ? 6 : 0;
+
+  const totalPrice = price + shipping;
+
   // fetch data from localStorage
   const address = JSON.parse(localStorage.getItem("address"));
   const orderDetail = JSON.parse(localStorage.getItem("orderDetail"));
 
+  // get data from localstorage or db
   if (!address || !orderDetail) {
     return (
       <div className="min-h-screen flex items-center justify-center text-gray-500">
@@ -18,6 +30,7 @@ export const RecivedOrder = () => {
     );
   }
 
+  // nutmlize date
   const formattedDate = new Date(orderDetail.orderDate).toLocaleDateString();
   const orderNumber = orderDetail.orderNumber || "2726";
 
@@ -68,13 +81,13 @@ export const RecivedOrder = () => {
             </p>
           </div>
 
-          {/* Barcode & QR */}
+          {/* generate the QRCode */}
           <div className="flex flex-col sm:flex-row gap-6 mt-6 justify-center items-center">
             <div className="p-4 bg-white shadow rounded-md">
               <QRCode
                 size={256}
                 style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-                value={`https://onlinemarkt.netlify.app/products/3`}
+                value={`https://onlinemarkt.netlify.app/cart`} // this is static -- in the Futuer<complete>
                 viewBox={`0 0 256 256`}
               />
             </div>
@@ -89,15 +102,15 @@ export const RecivedOrder = () => {
           <div className="space-y-3">
             <div className="flex justify-between border-b pb-2">
               <span>Lightweight Studio Headphones × 1</span>
-              <span className="font-semibold">$289</span>
+              <span className="font-semibold">${price.toFixed(2)}</span>
             </div>
             <div className="flex justify-between border-b pb-2">
               <span>Shipping</span>
-              <span className="font-semibold">$2</span>
+              <span className="font-semibold">${shipping}</span>
             </div>
             <div className="flex justify-between text-lg font-bold text-green-600 pt-2">
               <span>Total</span>
-              <span>$291</span>
+              <span>${totalPrice.toFixed(2)}</span>
             </div>
           </div>
         </div>

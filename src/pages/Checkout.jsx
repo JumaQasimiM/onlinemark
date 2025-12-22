@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   MdLocalShipping,
   MdStore,
@@ -11,7 +11,17 @@ import { SiGooglepay } from "react-icons/si";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
+import { useCartContext } from "../context/CartContext";
+
 export const Checkout = () => {
+  //
+  const { getCart } = useCartContext();
+  const cartItems = getCart();
+  // fetch totla cart items
+  const totalItem = cartItems.length;
+  // get total price
+  const totalPrice = localStorage.getItem("totalPrice");
+
   // email
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -47,7 +57,15 @@ export const Checkout = () => {
   const [cardNumber, setCardNumber] = useState("");
   const [date, setDate] = useState("");
   const [cvc, setCVC] = useState("");
-  const [CardholderName, setCardholderName] = useState("");
+  const [cardholderName, setCardholderName] = useState("");
+
+  // wenn chnage the paymentmethod
+  useEffect(() => {
+    setCardNumber("");
+    setCVC("");
+    setDate("");
+    setCardholderName("");
+  }, [paymentMethod]);
   const navigate = useNavigate();
 
   // payment with paypal
@@ -125,7 +143,7 @@ export const Checkout = () => {
     if (!value) {
       setZipError("Zip code is requerd.");
     } else if (!/^\d{4,}$/.test(value)) {
-      setZipError("ZIP code must be at least 3 characters.");
+      setZipError("ZIP code must be at least 4 characters.");
     } else {
       setZipError("");
     }
@@ -144,13 +162,11 @@ export const Checkout = () => {
   };
   // use info checkbox for billing address
   const handleUseinfo = (e) => {
-    if (e.target.checked) {
-      setUseInfo(true);
-      localStorage.setItem("bllingAddress", useInfo);
-    } else {
-      setUseInfo(false);
-    }
+    const checked = e.target.checked;
+    setUseInfo(checked);
+    localStorage.setItem("billingAddress", JSON.stringify(checked));
   };
+
   // --- Handlers ---
   const handleShowPickup = () => {
     setShowPickup(true);
@@ -161,14 +177,45 @@ export const Checkout = () => {
     setShowPickup(false);
   };
 
-  // payment with card
+  // validation  bank card
   const handleCard = () => {
-    if (!cardNumber || !date || !CardholderName || !cvc) {
-      toast.error("Please fix the errors in the Card details");
+    // Card number: 13–19 digits
+    if (!/^\d{13,19}$/.test(cardNumber)) {
+      toast.error("Please enter a valid card number (13 - 19 digits)");
       return false;
     }
+
+    // Expiry date: MM/YY
+    if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(date)) {
+      toast.error("Expiry date must be in MM/YY format");
+      return false;
+    }
+
+    // Check if card is expired
+    const [month, year] = date.split("/").map(Number);
+    const expiryDate = new Date(2000 + year, month);
+    const now = new Date();
+
+    if (expiryDate <= now) {
+      toast.error("Card has expired");
+      return false;
+    }
+
+    // CVC: 3 or 4 digits
+    if (!/^\d{3,4}$/.test(cvc)) {
+      toast.error("Invalid CVC (3 or 4 digits)");
+      return false;
+    }
+
+    // Cardholder name
+    if (!cardholderName || cardholderName.trim().length < 3) {
+      toast.error("Please enter the cardholder name");
+      return false;
+    }
+
     return true;
   };
+
   const handlePaypal = () => {
     if (!paypalAcout || paypalAcout.length < 5) {
       toast.error(
@@ -206,7 +253,7 @@ export const Checkout = () => {
       city &&
       country;
 
-    if (!isFormValid) {
+    if (showShip && !isFormValid) {
       toast.error("Please fill all required fields correctly");
       return;
     }
@@ -228,16 +275,11 @@ export const Checkout = () => {
     if (!isValidPayment) return;
 
     toast.success(`Processing order with ${paymentMethod}`);
-    const Address = {
-      firstname,
-      lastname,
-      email,
-      street,
-      homeNo,
-      zip,
-      city,
-      country,
-    };
+
+    const Address = showShip
+      ? { firstname, lastname, email, street, homeNo, zip, city, country }
+      : { pickup: true };
+
     const orderDate = new Date();
     const orderDetail = { paymentMethod, email, orderDate };
     localStorage.setItem("orderDetail", JSON.stringify(orderDetail));
@@ -494,7 +536,7 @@ export const Checkout = () => {
                         />
 
                         <input
-                          value={CardholderName}
+                          value={cardholderName}
                           onChange={(e) => setCardholderName(e.target.value)}
                           placeholder="Cardholder Name"
                           className="col-span-1 sm:col-span-2 border px-3 py-2 rounded-md focus:outline-none"
@@ -601,15 +643,15 @@ export const Checkout = () => {
           <div className="space-y-3 text-sm">
             <div className="flex justify-between">
               <span>Total Items</span>
-              <span>9</span>
+              <span>{totalItem}</span>
             </div>
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span>$289</span>
+              <span>$ {totalPrice}</span>
             </div>
             <div className="flex justify-between font-semibold border-t pt-3">
               <span>Total</span>
-              <span>$289</span>
+              <span>$ {totalPrice}</span>
             </div>
           </div>
         </div>
