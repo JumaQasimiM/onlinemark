@@ -1,5 +1,4 @@
-import { useState } from "react";
-import registerImg from "../assets/einkaufen.jpg"; // replace with your image
+import registerImg from "../assets/einkaufen.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
@@ -13,8 +12,11 @@ import {
 export const Register = () => {
   const navigate = useNavigate();
 
+  // handle submit funtion
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // crreate formData
     const formData = new FormData(e.target);
 
     const formvalues = {
@@ -25,7 +27,7 @@ export const Register = () => {
       birthday: formData.get("birthday"),
       bornCity: formData.get("bornCity"),
     };
-    // console.log(formvalues.email);
+
     // Simple validation
     if (
       !formvalues.firstname ||
@@ -38,9 +40,9 @@ export const Register = () => {
       toast.error("Please fill in all required fields");
       return;
     }
+
     // email validation
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
     if (!regex.test(formvalues.email)) {
       toast.error("Enter a valid email");
       return;
@@ -54,6 +56,11 @@ export const Register = () => {
       password: formvalues.password,
       fullname: formvalues.firstname + " " + formvalues.lastname,
     };
+    const squrtyQuestion = {
+      bornCity: formvalues.bornCity,
+      birthday: formvalues.birthday,
+    };
+    localStorage.setItem("securtyquestion", JSON.stringify(squrtyQuestion));
     localStorage.setItem("user", JSON.stringify(user));
 
     toast.success("Registration successful!");
@@ -63,7 +70,7 @@ export const Register = () => {
   return (
     <section className="min-h-screen bg-gray-100 flex items-center justify-center px-4 mt-15    ">
       <div className="w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden md:grid md:grid-cols-2">
-        {/* Image Section */}
+        {/* Image Section  in mobile hide*/}
         <div className="relative hidden md:block">
           <img
             src={registerImg}
