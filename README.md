@@ -152,36 +152,21 @@ Users can **browse products**, **search and filter items**, view **product detai
 - `LocalStorage.js` – LocalStorage utilities (future)
 - `validation.js` – Login/Register form validation
 
-### src/assets
+### 📸 Product Gallery
 
-import read1 from "../assets/images/read1.png";
-import read12 from "../assets/images/read2.png";
-import read3 from "../assets/images/read3.png";
-import read4 from "../assets/images/read4.png";
-import read5 from "../assets/images/read5.png";
+<p align="center">
+  <img src="./src/assets/read1.png" alt="Product 1" width="200" />
+  <img src="./src/assets/read2.png" alt="Product 2" width="200" />
+  <img src="./src/assets/read3.png" alt="Product 3" width="200" />
+</p>
+<p align="center">
+  <img src="./src/assets/read4.png" alt="Product 4" width="200" />
+  <img src="./src/assets/read5.png" alt="Product 5" width="200" />
+</p>
 
-### Product Gallery
-
-### Product Gallery
-
-<img src="src/assets/images/read1.png" alt="Product 1" width="230" />
-<img src="src/assets/images/read2.png" alt="Product 2" width="230" />
-<img src="src/assets/images/read3.png" alt="Product 3" width="230" />
-<img src="src/assets/images/read4.png" alt="Product 4" width="230" />
-<img src="src/assets/images/read5.png" alt="Product 5" width="230" />
-
-<table>
-  <tr>
-    <td><img src="./src/assets/read1.png" alt="Product 1" width="200" /></td>
-    <td><img src="src/assets/read2.png" alt="Product 2" width="200" /></td>
-    <td><img src="src/assets/read3.png" alt="Product 3" width="200" /></td>
-  </tr>
-  <tr>
-    <td><img src="src/assets/read4.png" alt="Product 4" width="200" /></td>
-    <td><img src="src/assets/read5.png" alt="Product 5" width="200" /></td>
-  </tr>
-</table>
+---
 
 ## 🔗 Links
 
-- **Live Demo:** [https://onlinemarkt.netlify.app](https://onlinemarkt.netlify.app)- **Personal Website:** [https://mh-jumaqasimi.netlify.app](https://mh-jumaqasimi.netlify.app)
+- **Live Demo:** [https://onlinemarkt.netlify.app](https://onlinemarkt.netlify.app)
+- **Personal Website:** [https://mh-jumaqasimi.netlify.app](https://mh-jumaqasimi.netlify.app)
