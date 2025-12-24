@@ -37,6 +37,7 @@ export const Header = () => {
     return () => window.removeEventListener("storage", handleStorage);
   }, []);
 
+  // logout --- uselocalstorage to save user
   const handleLogout = () => {
     localStorage.removeItem("user");
     setIsUser(null);
@@ -45,7 +46,7 @@ export const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300
-        ${isScroll ? "bg-gray-200 shadow-lg py-4" : "bg-gray-50 py-6"}`}
+        ${isScroll ? "bg-gray-200 shadow-lg py-4" : "bg-gray-100  py-6"}`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-6">
         {/* Logo */}
@@ -128,7 +129,7 @@ export const Header = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="md:hidden w-full absolute top-full left-0 py-6 bg-sky-500 shadow-2xl rounded-b-xl transition-all duration-300 z-50"
+          className="md:hidden w-full absolute top-full left-0 py-6 bg-gradient-to-b from-sky-300 to-sky-400 shadow-2xl rounded-b-xl transition-all duration-300 z-50"
         >
           <ul className="flex flex-col items-center gap-6 text-white font-semibold">
             {navItems.map((item, index) => (

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export const Hero = () => {
   return (
-    <section className="relative w-full min-h-[90vh] flex items-center justify-center bg-gradient-to-b from-sky-100 to-white overflow-hidden">
+    <section className="relative w-full min-h-[90vh] mt-19 flex items-center justify-center bg-gradient-to-b from-sky-100 to-white overflow-hidden">
       {/* Layered Wave Background */}
       <div className="absolute inset-0 w-full h-full">
         <svg

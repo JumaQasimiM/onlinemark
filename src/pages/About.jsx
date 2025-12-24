@@ -1,14 +1,9 @@
 import { motion } from "framer-motion";
-import {
-  FaUsers,
-  FaLightbulb,
-  FaGlobe,
-  FaFacebookF,
-  FaInstagram,
-  FaYoutube,
-  FaTiktok,
-} from "react-icons/fa";
+import { FaUsers, FaLightbulb, FaGlobe } from "react-icons/fa";
 import { FaShippingFast, FaLock, FaHeadset } from "react-icons/fa";
+import { SocialMedia } from "../components/SocialMedia";
+
+//create  description object about mission and shop
 const values = [
   {
     title: "Our Team",
@@ -30,49 +25,30 @@ const values = [
   },
 ];
 
-const socials = [
+// create our services object
+const services = [
   {
-    icon: <FaFacebookF />,
-    color: "from-blue-500 to-blue-700",
-    link: "https://facebook.com",
+    title: "Fast Delivery",
+    description:
+      "High-quality fast delivery for a seamless shopping experience.",
+    icon: <FaShippingFast />,
   },
   {
-    icon: <FaInstagram />,
-    color: "from-pink-500 via-purple-500 to-orange-400",
-    link: "https://instagram.com",
+    title: "Secure Payment",
+    description: "Secure payment methods to keep your transactions safe.",
+    icon: <FaLock />,
   },
   {
-    icon: <FaYoutube />,
-    color: "from-red-500 to-red-700",
-    link: "https://www.youtube.com/@programingskill",
-  },
-  {
-    icon: <FaTiktok />,
-    color: "from-black to-gray-900",
-    link: "https://tiktok.com",
+    title: "24/7 Support",
+    description: "Round-the-clock support for all your queries.",
+    icon: <FaHeadset />,
   },
 ];
-
 export const About = () => {
   return (
     <section className="relative bg-gray-50 py-32 overflow-hidden">
-      {/* Wave Background */}
-      <div className="absolute top-0 left-0 w-full -z-10">
-        <svg
-          className="w-full h-48"
-          viewBox="0 0 1440 320"
-          preserveAspectRatio="none"
-        >
-          <path
-            fill="#0ea5e9"
-            fillOpacity="0.2"
-            d="M0,160L48,149.3C96,139,192,117,288,138.7C384,160,480,224,576,218.7C672,213,768,139,864,117.3C960,96,1056,128,1152,138.7C1248,149,1344,139,1392,133.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-          ></path>
-        </svg>
-      </div>
-
       <div className="max-w-6xl mx-auto px-6">
-        {/* Hero / About */}
+        {/* About */}
         <motion.header
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -147,25 +123,7 @@ export const About = () => {
 
         {/* Services Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-          {[
-            {
-              title: "Fast Delivery",
-              description:
-                "High-quality fast delivery for a seamless shopping experience.",
-              icon: <FaShippingFast />,
-            },
-            {
-              title: "Secure Payment",
-              description:
-                "Secure payment methods to keep your transactions safe.",
-              icon: <FaLock />,
-            },
-            {
-              title: "24/7 Support",
-              description: "Round-the-clock support for all your queries.",
-              icon: <FaHeadset />,
-            },
-          ].map((service, idx) => (
+          {services.map((service, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 24 }}
@@ -185,53 +143,9 @@ export const About = () => {
             </motion.div>
           ))}
         </div>
-
-        {/* Social Media Section */}
-        <div className="text-center max-w-2xl mx-auto">
-          <motion.span
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="inline-block mb-4 text-sm font-semibold tracking-widest text-cyan-500 uppercase"
-          >
-            Stay Connected
-          </motion.span>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-milonga text-3xl md:text-4xl font-extrabold text-gray-900 mb-8"
-          >
-            Follow Us on Social Media
-          </motion.h2>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {socials.map((social, idx) => (
-              <motion.a
-                key={idx}
-                href={social.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 32 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                whileHover={{ y: -6, scale: 1.05 }}
-                aria-label={`Visit our ${social.name}`}
-              >
-                <div
-                  className={`w-16 h-16 mb-6 flex items-center justify-center rounded-xl bg-gradient-to-br ${social.color} text-white text-2xl shadow-md transition`}
-                >
-                  {social.icon}
-                </div>
-              </motion.a>
-            ))}
-          </div>
-        </div>
       </div>
+      {/* Social Media Section */}
+      <SocialMedia />
     </section>
   );
 };

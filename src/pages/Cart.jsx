@@ -6,6 +6,7 @@ import { useCartContext } from "../context/CartContext";
 
 export const Cart = () => {
   const navigate = useNavigate();
+  // use cart context custom hook
   const { removeFromCart, getCart, updateQuantity } = useCartContext();
 
   const [cartItems, setCartItems] = useState([]);
@@ -183,7 +184,7 @@ export const Cart = () => {
           </div>
           <button
             onClick={() => navigate("/checkout")}
-            disabled={cartItems.length === 0} // غیرفعال کردن اگر سبد خرید خالی باشد
+            disabled={cartItems.length === 0} // disable when cart is empty
             className={`w-full mt-6 bg-gray-900 text-white py-3 
     rounded-md text-sm font-semibold hover:bg-black transition
     ${cartItems.length === 0 ? "opacity-50 cursor-not-allowed" : ""}`}

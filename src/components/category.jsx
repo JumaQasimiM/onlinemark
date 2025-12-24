@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 export const Category = () => {
+  // create categories object
   const categories = [
     {
       name: "Beauty",
@@ -51,7 +52,7 @@ export const Category = () => {
               key={idx}
               to="/products"
               aria-label={`Browse ${cat.name}`}
-              className="focus:outline-none focus:ring-2 focus:ring-amber-400 rounded-xl sm:rounded-2xl"
+              className="focus:outline-none focus:ring-2 focus:ring-amber-400 rounded-lg sm:rounded-xl"
             >
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
@@ -84,12 +85,9 @@ export const Category = () => {
                 <h3 className="text-sm sm:text-base md:text-xl font-semibold text-gray-900 mb-1">
                   {cat.name}
                 </h3>
-                <p className="text-[6px] sm:text-xs md:text-sm text-gray-500">
+                <p className="text-[9px] sm:text-xs md:text-sm text-gray-500">
                   {cat.description}
                 </p>
-
-                {/* Hover Glow */}
-                <div className="absolute inset-0 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none bg-gradient-to-br from-white/40 to-transparent" />
               </motion.div>
             </Link>
           ))}
