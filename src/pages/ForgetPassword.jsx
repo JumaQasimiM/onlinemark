@@ -4,67 +4,62 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const ForgetPassword = () => {
+  const [email, setEmail] = useState("");
   const [bornCity, setBornCity] = useState("");
   const [birthday, setBirthday] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [showReset, setShowReset] = useState(false);
+  const [verifiedUserIndex, setVerifiedUserIndex] = useState(null);
+
   const navigate = useNavigate();
 
+  // ================= VERIFY USER =================
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      // get question from localstorage
-      const squrtyQuestion = JSON.parse(
-        localStorage.getItem("securtyquestion")
-      );
+    const users = JSON.parse(localStorage.getItem("users")) || [];
 
-      // if not be in localstorage
-      if (!squrtyQuestion) {
-        toast.error("Security questions not found");
-        return;
-      }
-
-      // check two answer of the question together
-      if (
-        squrtyQuestion.bornCity !== bornCity ||
-        squrtyQuestion.birthday !== birthday
-      ) {
-        // if the answer not correct.
-        toast.error("Invalid answer. Try again.");
-      } else {
-        toast.success("Verified successfully");
-        //   show rest form to insert new password
-        setShowReset(true);
-      }
-    } catch (error) {
-      toast.error("An error occurred");
+    if (!users.length) {
+      toast.error("No users found");
+      return;
     }
+
+    const userIndex = users.findIndex(
+      (u) =>
+        u.email === email &&
+        u.securityQuestion?.bornCity === bornCity &&
+        u.securityQuestion?.birthday === birthday
+    );
+
+    if (userIndex === -1) {
+      toast.error("Invalid information. Try again.");
+      return;
+    }
+
+    toast.success("Verified successfully");
+    setVerifiedUserIndex(userIndex);
+    setShowReset(true);
   };
 
-  //   handle Rest password
-  //   This approach is NOT secure because it stores password in localStorage.
-  //   this is only for my practice
+  // ================= RESET PASSWORD =================
   const handleResetPassword = () => {
-    // new password must have 6 characters
     if (newPassword.length < 6) {
       toast.error("Password must be at least 6 characters");
       return;
     }
 
-    try {
-      //   const res = fetch("url/userid", { password: newPassword }); // use json server or real server
-      // get user object from localstorage
-      const user = JSON.parse(localStorage.getItem("user")) || {};
-      // update the password to new password
-      user.password = newPassword;
-      localStorage.setItem("user", JSON.stringify(user));
-      toast.success("Password reset successful");
-      // redirect to login page
-      navigate("/login");
-    } catch (error) {
-      toast.error("can't update the password");
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    if (verifiedUserIndex === null) {
+      toast.error("User not verified");
+      return;
     }
+
+    users[verifiedUserIndex].password = newPassword;
+    localStorage.setItem("users", JSON.stringify(users));
+
+    toast.success("Password reset successful");
+    navigate("/login");
   };
 
   // Animation variants
@@ -85,20 +80,36 @@ export const ForgetPassword = () => {
               animate="visible"
               exit="exit"
               variants={variants}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.4 }}
             >
               <h2 className="text-2xl font-bold text-center text-gray-800">
                 Forgot Password?
               </h2>
               <p className="text-center text-gray-500 text-sm mt-2">
-                Answer the security questions to reset your password
+                Verify your identity to reset your password
               </p>
 
-              {/* form section */}
               <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+                {/* Email */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    What is your birth city?
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="w-full rounded-lg border border-gray-300 px-4 py-2
+                    focus:outline-none focus:ring-2 focus:ring-sky-400"
+                    required
+                  />
+                </div>
+
+                {/* Birth City */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Birth City
                   </label>
                   <input
                     type="text"
@@ -111,15 +122,16 @@ export const ForgetPassword = () => {
                   />
                 </div>
 
+                {/* Birthday */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    What is your birthday?
+                    Birthday (1–31)
                   </label>
                   <input
                     type="number"
                     value={birthday}
                     onChange={(e) => setBirthday(e.target.value)}
-                    placeholder="Enter birthday (number)"
+                    placeholder="Enter birthday"
                     className="w-full rounded-lg border border-gray-300 px-4 py-2
                     focus:outline-none focus:ring-2 focus:ring-sky-400"
                     required
@@ -133,11 +145,12 @@ export const ForgetPassword = () => {
                 >
                   Verify & Continue
                 </button>
+
                 <Link
                   to="/login"
-                  className="block text-center text-sm text-gray-500 hover:text-sky-500 transition"
+                  className="block text-center text-sm text-gray-500 hover:text-sky-500"
                 >
-                  Remembered your password? Login
+                  Back to Login
                 </Link>
               </form>
             </motion.div>
@@ -148,13 +161,13 @@ export const ForgetPassword = () => {
               animate="visible"
               exit="exit"
               variants={variants}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.4 }}
             >
               <h2 className="text-2xl font-bold text-center text-gray-800">
                 Reset Password
               </h2>
               <p className="text-center text-gray-500 text-sm mt-2">
-                Enter your new password below
+                Enter your new password
               </p>
 
               <div className="mt-6 space-y-4">
@@ -162,7 +175,7 @@ export const ForgetPassword = () => {
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Enter new password"
+                  placeholder="New password"
                   className="w-full rounded-lg border border-gray-300 px-4 py-2
                   focus:outline-none focus:ring-2 focus:ring-green-400"
                 />

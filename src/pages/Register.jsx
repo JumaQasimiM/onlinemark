@@ -16,7 +16,6 @@ export const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // crreate formData
     const formData = new FormData(e.target);
 
     const formvalues = {
@@ -28,40 +27,42 @@ export const Register = () => {
       bornCity: formData.get("bornCity"),
     };
 
-    // Simple validation
-    if (
-      !formvalues.firstname ||
-      !formvalues.lastname ||
-      !formvalues.email ||
-      !formvalues.password ||
-      !formvalues.bornCity ||
-      !formvalues.birthday
-    ) {
+    // Validation
+    if (Object.values(formvalues).some((v) => !v)) {
       toast.error("Please fill in all required fields");
       return;
     }
 
-    // email validation
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!regex.test(formvalues.email)) {
       toast.error("Enter a valid email");
       return;
     }
 
-    // Mock register logic
-    // this approch is not good for real project
-    // but i use jsut for my practic project
-    const user = {
+    // Get existing users
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    // ❗ Prevent duplicate email
+    const userExists = users.some((u) => u.email === formvalues.email);
+
+    if (userExists) {
+      toast.error("Email already registered");
+      return;
+    }
+
+    // Create user object
+    const newUser = {
       email: formvalues.email,
       password: formvalues.password,
-      fullname: formvalues.firstname + " " + formvalues.lastname,
+      fullname: `${formvalues.firstname} ${formvalues.lastname}`,
+      securityQuestion: {
+        bornCity: formvalues.bornCity,
+        birthday: formvalues.birthday,
+      },
     };
-    const squrtyQuestion = {
-      bornCity: formvalues.bornCity,
-      birthday: formvalues.birthday,
-    };
-    localStorage.setItem("securtyquestion", JSON.stringify(squrtyQuestion));
-    localStorage.setItem("user", JSON.stringify(user));
+
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
 
     toast.success("Registration successful!");
     navigate("/login");

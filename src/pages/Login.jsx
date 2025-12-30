@@ -15,38 +15,38 @@ export const Login = () => {
 
   const loginHandle = (e) => {
     e.preventDefault();
-    // create formdata
+
     const formDate = new FormData(e.target);
 
-    // get form data value for check and validation
     const formValues = {
       username: formDate.get("username"),
       password: formDate.get("password"),
     };
 
-    // validate username and password
+    // validation
     const errors = validation(formValues);
     setError(errors);
-
-    // stop submit if any error exists
     if (errors.username || errors.password) return;
 
-    // ============login logic here=======
-    // get data from db but i get the data from localStorage
+    // get all registered users
+    const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    // find matching user
+    const foundUser = users.find(
+      (u) =>
+        u.email === formValues.username && u.password === formValues.password
+    );
 
-    if (
-      formValues.username === user.email &&
-      formValues.password === user.password
-    ) {
-      localStorage.setItem("user", formValues.username);
-      // redirect the user into dashbord or profeil ---
-      navigate("/products"); // just for practic
-      window.location.reload();
-    } else {
-      toast.error("usernaem or password is incorect.");
+    if (!foundUser) {
+      toast.error("Username or password is incorrect");
+      return;
     }
+
+    // save logged-in user
+    localStorage.setItem("currentUser", JSON.stringify(foundUser));
+
+    toast.success("Login successful!");
+    navigate("/products");
   };
 
   return (

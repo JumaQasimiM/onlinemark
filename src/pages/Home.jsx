@@ -43,6 +43,7 @@ export const Home = () => {
               .slice(0, 4) // get only 4 products
               .map((product) => (
                 // <PopularProductCard /> component
+                //
                 <PopularProductCard
                   key={product.id}
                   {...product}
